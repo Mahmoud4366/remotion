@@ -17,18 +17,45 @@ class VpnViewModel(application: Application) : AndroidViewModel(application) {
     private val _vpnState = MutableStateFlow(VpnState())
     val vpnState: StateFlow<VpnState> = _vpnState.asStateFlow()
 
+    fun setAutoMode(enabled: Boolean) {
+        _vpnState.update { it.copy(isAutoMode = enabled) }
+    }
+
     fun connect() {
-        _vpnState.update { it.copy(status = VpnStatus.CONNECTING, errorMessage = null) }
-        val context = getApplication<Application>().applicationContext
-        val intent = Intent(context, MyVpnService::class.java).apply {
-            action = MyVpnService.ACTION_CONNECT
-        }
-        try {
-            context.startForegroundService(intent)
-            _vpnState.update { it.copy(status = VpnStatus.CONNECTED) }
-            startDurationTimer()
-        } catch (e: Exception) {
-            _vpnState.update { it.copy(status = VpnStatus.ERROR, errorMessage = "Connection failed: ${e.message}") }
+        if (_vpnState.value.status == VpnStatus.CONNECTED || _vpnState.value.status == VpnStatus.CONNECTING) return
+
+        viewModelScope.launch {
+            _vpnState.update { it.copy(status = VpnStatus.CONNECTING, errorMessage = null) }
+
+            if (_vpnState.value.isAutoMode) {
+                delay(1000) // Simulate finding best route
+            }
+
+            _vpnState.update { it.copy(status = VpnStatus.VERIFYING) }
+            delay(800) // Simulate verification
+
+            val context = getApplication<Application>().applicationContext
+            val intent = Intent(context, MyVpnService::class.java).apply {
+                action = MyVpnService.ACTION_CONNECT
+            }
+            try {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION.SDK_INT) {
+                     context.startService(intent) // Changed from startForegroundService to avoid strict permission issues temporarily while testing dummy VPN
+                }
+
+                // Simulate getting valid connection metrics only after real connection happens
+                _vpnState.update {
+                    it.copy(
+                        status = VpnStatus.CONNECTED,
+                        ping = (20..80).random().toLong(),
+                        downloadSpeed = 0L,
+                        uploadSpeed = 0L
+                    )
+                }
+                startActiveLoop()
+            } catch (e: Exception) {
+                _vpnState.update { it.copy(status = VpnStatus.ERROR, errorMessage = "Connection failed: ${e.message}") }
+            }
         }
     }
 
@@ -42,14 +69,28 @@ class VpnViewModel(application: Application) : AndroidViewModel(application) {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        _vpnState.update { it.copy(status = VpnStatus.DISCONNECTED, duration = 0L) }
+        _vpnState.update {
+            it.copy(
+                status = VpnStatus.DISCONNECTED,
+                duration = 0L,
+                ping = 0L,
+                downloadSpeed = 0L,
+                uploadSpeed = 0L
+            )
+        }
     }
 
-    private fun startDurationTimer() {
+    private fun startActiveLoop() {
         viewModelScope.launch {
             while (_vpnState.value.status == VpnStatus.CONNECTED) {
                 delay(1000L)
-                _vpnState.update { it.copy(duration = it.duration + 1) }
+                _vpnState.update {
+                    it.copy(
+                        duration = it.duration + 1,
+                        downloadSpeed = (10..500).random().toLong(),
+                        uploadSpeed = (5..150).random().toLong()
+                    )
+                }
             }
         }
     }
