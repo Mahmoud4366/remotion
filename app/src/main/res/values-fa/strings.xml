@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">مدرن وی‌پی‌ان</string>
+    <string name="status_connected">متصل شد</string>
+    <string name="status_disconnected">قطع شد</string>
+    <string name="btn_connect">اتصال</string>
+    <string name="btn_disconnect">قطع اتصال</string>
+    <string name="duration">مدت زمان</string>
+    <string name="settings">تنظیمات</string>
+    <string name="language_selection">Language / زبان</string>
+    <string name="dark_mode">حالت تاریک</string>
+    <string name="privacy_policy">حریم خصوصی</string>
+    <string name="about">درباره ما</string>
+</resources>
