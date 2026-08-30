@@ -7,6 +7,11 @@
     <string name="status_disconnected">DISCONNECTED</string>
     <string name="status_error">Error</string>
 
+    <string name="phase_fetching">Fetching servers...</string>
+    <string name="phase_testing">Testing servers...</string>
+    <string name="phase_finding">Finding best server...</string>
+    <string name="phase_verifying">Verifying connection...</string>
+
     <string name="btn_connect">Connect</string>
     <string name="btn_disconnect">Disconnect</string>
 
@@ -17,6 +22,8 @@
     <string name="protocol">Protocol</string>
     <string name="dns">DNS</string>
     <string name="endpoint">Endpoint</string>
+    <string name="server">Server</string>
+    <string name="country">Country</string>
 
     <string name="auto_mode">Auto Mode</string>
     <string name="auto_desc">Best route selected automatically</string>

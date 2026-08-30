@@ -7,6 +7,11 @@
     <string name="status_disconnected">قطع شده</string>
     <string name="status_error">خطا</string>
 
+    <string name="phase_fetching">در حال دریافت سرورها...</string>
+    <string name="phase_testing">در حال تست سرورها...</string>
+    <string name="phase_finding">در حال پیدا کردن بهترین سرور...</string>
+    <string name="phase_verifying">در حال بررسی اتصال...</string>
+
     <string name="btn_connect">اتصال</string>
     <string name="btn_disconnect">قطع اتصال</string>
 
@@ -17,6 +22,8 @@
     <string name="protocol">پروتکل</string>
     <string name="dns">دی‌ان‌اس</string>
     <string name="endpoint">مسیر</string>
+    <string name="server">سرور</string>
+    <string name="country">کشور</string>
 
     <string name="auto_mode">حالت خودکار</string>
     <string name="auto_desc">بهترین مسیر به‌صورت خودکار انتخاب می‌شود</string>

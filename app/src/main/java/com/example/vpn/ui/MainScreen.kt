@@ -52,7 +52,7 @@ fun MainScreen(viewModel: VpnViewModel, onNavigateToSettings: () -> Unit) {
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Auto Mode Switch
             Row(
@@ -96,11 +96,11 @@ fun MainScreen(viewModel: VpnViewModel, onNavigateToSettings: () -> Unit) {
             Spacer(modifier = Modifier.height(24.dp))
 
             // Status Text
-            val statusText = when (state.status) {
+            val statusText = state.connectionPhase ?: when (state.status) {
                 VpnStatus.DISCONNECTED -> stringResource(R.string.status_ready)
-                VpnStatus.CONNECTING -> if (state.isAutoMode) stringResource(R.string.auto_finding) else stringResource(R.string.status_connecting)
+                VpnStatus.CONNECTING -> stringResource(R.string.status_connecting)
                 VpnStatus.VERIFYING -> stringResource(R.string.status_verifying)
-                VpnStatus.CONNECTED -> if (state.isAutoMode) stringResource(R.string.auto_selected) else stringResource(R.string.status_connected)
+                VpnStatus.CONNECTED -> stringResource(R.string.status_connected)
                 VpnStatus.ERROR -> stringResource(R.string.status_error)
             }
 
@@ -122,19 +122,29 @@ fun MainScreen(viewModel: VpnViewModel, onNavigateToSettings: () -> Unit) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Info Cards (Ping, Down, Up) - Only visible when connected
+            // Info Cards (Ping, Down, Up, Server Info) - Only visible when connected
             if (state.status == VpnStatus.CONNECTED) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    InfoCard(title = stringResource(R.string.ping), value = "${state.ping} ms", modifier = Modifier.weight(1f))
-                    InfoCard(title = stringResource(R.string.download), value = "${state.downloadSpeed} KB/s", modifier = Modifier.weight(1f))
-                    InfoCard(title = stringResource(R.string.upload), value = "${state.uploadSpeed} KB/s", modifier = Modifier.weight(1f))
+                Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        InfoCard(title = stringResource(R.string.server), value = state.selectedProfile.take(15), modifier = Modifier.weight(1f))
+                        InfoCard(title = stringResource(R.string.country), value = state.serverCountry ?: "-", modifier = Modifier.weight(1f))
+                        InfoCard(title = stringResource(R.string.protocol), value = state.protocol, modifier = Modifier.weight(1f))
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        InfoCard(title = stringResource(R.string.ping), value = "${state.ping} ms", modifier = Modifier.weight(1f))
+                        InfoCard(title = stringResource(R.string.download), value = "${state.downloadSpeed} KB/s", modifier = Modifier.weight(1f))
+                        InfoCard(title = stringResource(R.string.upload), value = "${state.uploadSpeed} KB/s", modifier = Modifier.weight(1f))
+                    }
                 }
             } else {
-                // Placeholder space so UI doesn't jump too much
-                Spacer(modifier = Modifier.height(72.dp))
+                // Placeholder space
+                Spacer(modifier = Modifier.height(120.dp))
             }
 
             if (state.errorMessage != null) {
@@ -142,7 +152,7 @@ fun MainScreen(viewModel: VpnViewModel, onNavigateToSettings: () -> Unit) {
                 Text(text = state.errorMessage!!, color = MaterialTheme.colorScheme.error)
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -222,12 +232,12 @@ fun InfoCard(title: String, value: String, modifier: Modifier = Modifier) {
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-            .padding(12.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = title, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(text = value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+        Text(text = title, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(text = value, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, maxLines = 1)
     }
 }
 

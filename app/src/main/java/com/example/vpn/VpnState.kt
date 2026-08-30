@@ -18,5 +18,7 @@ data class VpnState(
     val protocol: String = "UDP",
     val isAutoMode: Boolean = false,
     val dnsStatus: String = "1.1.1.1",
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val connectionPhase: String? = null,
+    val serverCountry: String? = null
 )
