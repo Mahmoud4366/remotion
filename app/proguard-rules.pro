@@ -21,6 +21,10 @@
 # Material
 -keep class com.google.android.material.** { *; }
 
+# OpenVPN Wrapper Library
+-keep class com.tim.openvpn.** { *; }
+-keep class net.openvpn.** { *; }
+
 # We must keep standard entry points for Android
 -keep class * extends android.app.Application { *; }
 -keep class * extends android.app.Activity { *; }

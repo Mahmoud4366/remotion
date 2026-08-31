@@ -57,3 +57,5 @@ app/build/
 
 # Secrets
 secrets.properties
+openvpn-1.1.3.aar
+openvpn_extract/

@@ -30,9 +30,10 @@
         </activity>
 
         <service
-            android:name=".service.MyVpnService"
+            android:name="com.tim.openvpn.service.OpenVPNService"
             android:permission="android.permission.BIND_VPN_SERVICE"
             android:exported="false"
+            tools:replace="android:exported"
             android:foregroundServiceType="specialUse">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
