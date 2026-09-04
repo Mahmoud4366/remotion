@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">مدرن وی‌پی‌ان</string>
+    <string name="status_ready">آماده اتصال</string>
+    <string name="status_connecting">در حال اتصال...</string>
+    <string name="status_verifying">در حال بررسی...</string>
+    <string name="status_connected">متصل</string>
+    <string name="status_disconnected">قطع شده</string>
+    <string name="status_error">خطا</string>
+
+    <string name="phase_fetching">در حال دریافت سرورها...</string>
+    <string name="phase_testing">در حال تست سرورها...</string>
+    <string name="phase_finding">در حال پیدا کردن بهترین سرور...</string>
+    <string name="phase_verifying">در حال بررسی اتصال...</string>
+
+    <string name="btn_connect">اتصال</string>
+    <string name="btn_disconnect">قطع اتصال</string>
+
+    <string name="duration">مدت زمان</string>
+    <string name="ping">پینگ</string>
+    <string name="download">دانلود</string>
+    <string name="upload">آپلود</string>
+    <string name="protocol">پروتکل</string>
+    <string name="dns">دی‌ان‌اس</string>
+    <string name="endpoint">مسیر</string>
+    <string name="server">سرور</string>
+    <string name="country">کشور</string>
+
+    <string name="auto_mode">حالت خودکار</string>
+    <string name="auto_desc">بهترین مسیر به‌صورت خودکار انتخاب می‌شود</string>
+    <string name="auto_finding">در حال پیدا کردن بهترین مسیر...</string>
+    <string name="auto_selected">بهترین مسیر انتخاب شد</string>
+
+    <string name="settings">تنظیمات</string>
+    <string name="language_selection">Language / زبان</string>
+    <string name="dark_mode">حالت تاریک</string>
+    <string name="privacy_policy">حریم خصوصی</string>
+    <string name="about">درباره ما</string>
+</resources>

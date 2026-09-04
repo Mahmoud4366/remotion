@@ -1,97 +1,39 @@
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+# ModernVPN
 
-[![Discord Shield](https://img.shields.io/discord/809501355504959528?color=000000&label=Discord&logo=fdgssdf)](https://remotion.dev/discord)
-[![NPM Version](https://img.shields.io/npm/v/remotion.svg?style=flat&color=black)](https://www.npmjs.org/package/remotion)
-[![NPM Downloads](https://img.shields.io/npm/dm/remotion.svg?style=flat&color=black&label=Downloads)](https://npmcharts.com/compare/remotion?minimal=true)
-<a href="https://twitter.com/remotion"><img src="https://img.shields.io/twitter/follow/remotion?label=Twitter&color=black" alt="Twitter"></a>
+## معرفی برنامه
+یک اپلیکیشن VPN مدرن، امن و پایدار برای کاربران. این اپلیکیشن از VpnService استاندارد اندروید استفاده می‌کند و آماده اضافه شدن پروفایل‌ها و سرورهای واقعی است.
 
-Video tools for the agent era.
+## قابلیت‌ها
+- اتصال و قطع اتصال استاندارد با VpnService
+- نمایش مدت زمان اتصال
+- دکمه‌های بزرگ Connect/Disconnect
+- رابط کاربری مدرن با Jetpack Compose (Material 3)
+- پشتیبانی از زبان‌های فارسی و انگلیسی (RTL Support)
+- Foreground Service با Notification
 
-## Video Creation
+## Screenshot placeholder
+[تصویر برنامه در اینجا قرار می‌گیرد]
 
-- **Make videos agentically**: Turn your idea into a video using your coding agent.
-- **Make videos interactively**: Edit and animate using drag and drop.
-- **Make videos programmatically**: Connect to data, and manage complexity with code.
+## نحوه Build
+برای بیلد کردن برنامه کافیست دستور زیر را اجرا کنید:
+`./gradlew assembleDebug`
 
-React Code is the source of truth. Switch your workflow at any point.
+## نحوه نصب APK
+پس از پایان عملیات Build، می‌توانید فایل APK را در مسیر زیر پیدا کنید و آن را نصب کنید:
+APK: artifacts/app-debug.apk
 
-## Video Automation
+## نحوه اضافه‌کردن Profile
+در حال حاضر اپلیکیشن برای اتصال شبیه‌سازی شده است. در آینده می‌توانید با تغییر پیاده‌سازی `MyVpnService.kt` اطلاعات و پیکربندی‌های سرورهای واقعی را به آن بیفزایید.
 
-- **Design systems**: Create a library of animated assets for your organization.
-- **Batch rendering**: Render millions of videos on your own infrastructure.
-- **Applications**: Publish a simple tool or a complex video editor.
+## توضیح معماری
+این برنامه با استفاده از Clean Architecture، Kotlin Coroutines, StateFlow / ViewModel و Jetpack Compose ساخته شده است.
 
-## Get started
+## توضیح امنیت
+هیچ API Key یا Private Key درون سورس قرار ندارد. برای امنیت بیشتر هیچ لاگ حساسی ذخیره نمی‌شود.
 
-If you already have Node.JS installed, type
+## محدودیت‌های فعلی
+- نبود سرور واقعی VPN
+- پیاده‌سازی شبیه‌سازی شده تونل VPN
 
-```console
-npx create-video@latest
-```
-
-to get started. Otherwise, read the [installation page](https://www.remotion.dev/docs/) in the documentation.
-
-## Discover Remotion
-
-Remotion is extensively documented over more than 1000 pages.
-
-- Get Started
-  - [Installation](https://remotion.dev/docs)
-  - [Agent Skills](https://www.remotion.dev/docs/ai/skills)
-  - [Prompts](https://www.remotion.dev/prompts)
-  - [Templates](https://remotion.dev/templates)
-- Components
-  - [Elements](https://remotion.dev/elements)
-  - [Effects](https://remotion.dev/effects)
-  - [Shapes](https://remotion.dev/docs/shapes)
-  - [Transitions](https://remotion.dev/transitions)
-  - [Sound Effects](https://remotion.dev/docs/sfx)
-  - [Captions](https://remotion.dev/docs/captions)
-  - [Fonts](https://remotion.dev/docs/fonts)
-- Rendering
-  - [Node.js APIs](https://www.remotion.dev/docs/ssr)
-  - [Lambda](https://www.remotion.dev/docs/lambda)
-  - [Vercel](https://www.remotion.dev/docs/vercel-sandbox)
-  - [Client-side rendering](https://www.remotion.dev/docs/client-side-rendering/)
-  - [Comparison of options](https://remotion.dev/docs/compare-ssr)
-- Making apps
-  - [Player](https://remotion.dev/docs/player)
-  - [Editor Starter](https://remotion.dev/editor-starter)
-  - [Mediabunny](https://remotion.dev/docs/mediabunny)
-- Community
-  - [Discord](https://remotion.dev/discord)
-  - [Experts](https://remotion.dev/experts)
-  - [Resources](https://remotion.dev/resources)
-  - [Contributing](https://remotion.dev/contributing)
-  - Follow us on [X](https://x.com/remotion), [YouTube](https://youtube.com/@remotion_dev), [Instagram](https://instagram.com/remotion), [LinkedIn](https://linkedin.com/company/remotion)
-- Commercial
-  - [License](https://remotion.dev/license)
-  - [Store](https://remotion.pro/store)
-  - [About Remotion](https://remotion.dev/about)
-  - [Showcase](https://remotion.dev/showcase)
-- Help
-  - [Support](https://remotion.dev/support)
-  - [Discord](https://remotion.dev/discord)
-  - [Search](https://remotion.dev/search)
-  - [Ask AI](https://remotion.dev/ai)
-  - [GitHub Issues](https://remotion.dev/issues)
-
-## Documentation
-
-Documentation: [**remotion.dev/docs**](https://www.remotion.dev/docs)  
-API Reference: [**remotion.dev/api**](https://www.remotion.dev/api)
-
-## License
-
-Be aware of that Remotion has a special license and requires obtaining a company license in some cases. Read the [LICENSE](LICENSE.md) page for more information.
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) to learn about contributing to this project.
+## مسیر APK
+APK: artifacts/app-debug.apk
