@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060a14">
+<meta name="description" content="گام اول پنل سپهر — ساخت کلید کلودفلر در ۴ مرحله، با یک کلیک">
+<title>گام اول · گرفتن کلید | پنل سپهر</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M32 14l4.8 13.2L50 32l-13.2 4.8L32 50l-4.8-13.2L14 32l13.2-4.8z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a14; --card:rgba(255,255,255,.038); --card2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --txt:#e8edf7; --txt2:#9aa7bd; --txt3:#5d6b84;
+  --cy:#38bdf8; --vi:#8b5cf6; --gr:#34d399; --am:#fbbf24;
+  --grad:linear-gradient(135deg,#38bdf8 0%,#818cf8 55%,#c084fc 100%);
+  --r:18px; --r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Vazirmatn,system-ui,"Segoe UI",Tahoma,sans-serif;
+  background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.85;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+a{color:var(--cy);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+::selection{background:rgba(99,102,241,.4)}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+.ltr{direction:ltr;unicode-bidi:embed}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#bgfx{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+#bgfx .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 26s ease-in-out infinite alternate}
+#bgfx .o1{width:56vw;height:56vw;background:radial-gradient(circle,rgba(56,189,248,.22),transparent 65%);top:-22vw;inset-inline-start:-12vw}
+#bgfx .o2{width:48vw;height:48vw;background:radial-gradient(circle,rgba(139,92,246,.2),transparent 65%);bottom:-20vw;inset-inline-end:-10vw;animation-delay:-8s}
+#bgfx .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4vw,3vh,0) scale(1.12)}}
+.wrap{max-width:780px;margin:0 auto;padding:34px 18px 60px}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.topbar .logo{width:38px;height:38px}
+.topbar b{font-size:16px}
+.topbar a.back{margin-inline-start:auto;font-size:13px;color:var(--txt2)}
+.topbar a.back:hover{color:var(--txt)}
+.hero{text-align:center;margin-bottom:30px;animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero .step-badge{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:#04101d;
+  background:var(--grad);border-radius:99px;padding:6px 18px;margin-bottom:18px;
+  box-shadow:0 8px 26px -8px rgba(129,140,248,.7)
+}
+.hero h1{font-size:clamp(27px,5.5vw,40px);font-weight:900;letter-spacing:-.5px}
+.hero p{color:var(--txt2);margin-top:12px;font-size:15px}
+/* magic button */
+.magic{
+  display:flex;align-items:center;gap:18px;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(139,92,246,.12));
+  border:1px solid rgba(129,140,248,.45);border-radius:20px;padding:22px;margin:26px 0;
+  backdrop-filter:blur(14px);position:relative;overflow:hidden
+}
+.magic::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 70%,rgba(129,140,248,.25),transparent 85%);animation:rot 5s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.magic>*{position:relative}
+.magic .m-ic{width:56px;height:56px;flex:0 0 auto;border-radius:16px;background:var(--grad);display:grid;place-items:center;font-size:26px;box-shadow:0 10px 30px -8px rgba(129,140,248,.8)}
+.magic .m-tx{flex:1}
+.magic .m-tx b{font-size:17.5px;display:block}
+.magic .m-tx small{color:var(--txt2);font-size:12.8px}
+.btn{
+  border:0;border-radius:14px;padding:14px 26px;font-size:15px;font-weight:900;
+  background:var(--grad);color:#04101d;transition:.2s;white-space:nowrap;
+  box-shadow:0 10px 28px -8px rgba(129,140,248,.7)
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.big{width:100%;padding:17px;font-size:16.5px;margin-top:6px}
+.btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line2);box-shadow:none}
+/* wizard */
+.wizard{display:flex;flex-direction:column;gap:12px;margin:26px 0}
+.wstep{
+  display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);padding:17px 18px;backdrop-filter:blur(12px);transition:.25s;cursor:pointer
+}
+.wstep:hover{border-color:var(--line2)}
+.wstep.done{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.05)}
+.wnum{
+  width:38px;height:38px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;
+  border:1.5px solid var(--line2);color:var(--txt2);font-weight:900;font-size:15px;transition:.25s;background:rgba(0,0,0,.25)
+}
+.wstep.done .wnum{background:var(--gr);border-color:transparent;color:#052e1c}
+.wstep .wx{flex:1;min-width:0}
+.wstep .wx b{font-size:15px;display:block}
+.wstep .wx p{color:var(--txt2);font-size:12.8px;margin-top:4px}
+.wstep .wx code{
+  display:inline-block;background:rgba(0,0,0,.35);border:1px solid var(--line2);border-radius:8px;
+  padding:2px 10px;font-size:11.5px;color:#93c5fd;direction:ltr;unicode-bidi:embed;margin:3px 2px
+}
+.wstep .check{margin-top:auto;opacity:0;transition:.2s;color:var(--gr);font-size:15px;align-self:center}
+.wstep.done .check{opacity:1}
+/* cards */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;
+  backdrop-filter:blur(14px);margin-top:16px
+}
+.card h3{font-size:15px;font-weight:800;display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.perm{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
+.perm:last-child{border-bottom:0}
+.perm .p-ic{width:36px;height:36px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;font-size:16px}
+.perm b{font-size:13.8px;display:block}
+.perm small{color:var(--txt3);font-size:12px}
+.note{
+  border-radius:14px;padding:14px 16px;font-size:13px;line-height:2;
+  background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.3);color:#bbf7d0
+}
+.note.warn{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.32);color:#fde68a}
+/* faq */
+.faq-item{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;background:var(--card)}
+.faq-item summary{
+  cursor:pointer;list-style:none;padding:14px 18px;font-size:14px;font-weight:800;
+  display:flex;align-items:center;gap:10px
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";margin-inline-start:auto;font-size:19px;color:var(--txt3);transition:.25s}
+.faq-item[open] summary::after{transform:rotate(45deg);color:var(--cy)}
+.faq-item .fa{padding:0 18px 16px;color:var(--txt2);font-size:13.2px;line-height:2.1}
+.finale{
+  margin-top:30px;text-align:center;background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(56,189,248,.1));
+  border:1px solid rgba(52,211,153,.35);border-radius:20px;padding:30px 22px
+}
+.finale b{font-size:18px;display:block;margin-bottom:8px}
+.finale p{color:var(--txt2);font-size:13.5px;margin-bottom:18px}
+.foot{margin-top:34px;text-align:center;color:var(--txt3);font-size:12px;line-height:2}
+.logo{width:38px;height:38px}
+.logo svg{width:100%;height:100%}
+@media(max-width:560px){.magic{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<div id="bgfx"><div class="grid"></div><div class="orb o1"></div><div class="orb o2"></div></div>
+
+<div class="wrap">
+  <div class="topbar">
+    <span class="logo" data-logo></span>
+    <b>پنل <span class="grad">سپهر</span></b>
+    <a class="back" href="index.html">→ پنل اصلی</a>
+  </div>
+
+  <div class="hero">
+    <span class="step-badge">✦ گام ۱ از ۲</span>
+    <h1>کلید <span class="grad">سپهر</span> را بگیر</h1>
+    <p>یک «کلید API» از کلودفلر می‌سازیم تا سپهر بتواند ترافیک، بازدیدکننده‌ها و حملاتِ دامنه‌های تو را بخواند.<br>کلیدِ «جادویی» ما، همه‌ی دسترسی‌های لازم را از قبل برای تو تنظیم می‌کند — فقط باید تأیید بزنی.</p>
+  </div>
+
+  <div class="magic">
+    <span class="m-ic">🪄</span>
+    <span class="m-tx">
+      <b>کلید جادویی — با یک کلیک</b>
+      <small>صفحه‌ی ساخت کلید کلودفلر را با دسترسی‌های دقیق و از‌پیش‌تنشده باز می‌کند؛ تو فقط دکمه‌ی آبی <span class="ltr">Create Token</span> را می‌زنی.</small>
+    </span>
+    <a class="btn" id="magicBtn" target="_blank" rel="noopener" href="#">ساخت کلید 🪄</a>
+  </div>
+
+  <div class="wizard" id="wizard">
+    <div class="wstep" data-step="1">
+      <span class="wnum">۱</span>
+      <span class="wx"><b>وارد حساب کلودفلر شو</b>
+        <p>اگر دکمه‌ی بالا را زدی ولی صفحه‌ی <span class="ltr">Login</span> آمد، یک‌بار وارد حساب‌ات شو (ایمیلی که دامنه‌هایت را با آن ثبت کرده‌ای) و دوباره دکمه‌ی جادویی را بزن.</p></span>
+      <span class="check">✓</span>
+    </div>
+    <div class="wstep" data-step="2">
+      <span class="wnum">۲</span>
+      <span class="wx"><b>دکمه‌ی آبی <span class="ltr">Create Token</span> را بزن</b>
+        <p>در صفحه‌ای که باز شد، دسترسی‌ها از قبل مشخص‌اند: <code>Zone: Read</code> · <code>Analytics: Read</code> · <code>Firewall: Edit</code> — دامنه‌ها: <span class="ltr">Include all zones</span>. فقط پایین برو و روی <span class="ltr">Create Token</span> بزن.</p></span>
+      <span class="check">✓</span>
+    </div>
+    <div class="wstep" data-step="3">
+      <span class="wnum">۳</span>
+      <span class="wx"><b>کلید را کپی کن (فقط یک‌بار نمایش داده می‌شود!)</b>
+        <p>یک رشته‌ی بلند و تصادفی می‌آید؛ همین الان کپی‌اش کن. بعد از بستن این پنجره دیگر نمایش داده نمی‌شود، پس دست‌به‌دستش نده و جایی امن ذخیره‌اش کن.</p></span>
+      <span class="check">✓</span>
+    </div>
+    <div class="wstep" data-step="4">
+      <span class="wnum">۴</span>
+      <span class="wx"><b>بیا عقب — کلید را به پنل بده</b>
+        <p>به پنل اصلی برو، کلید را در کادر «گام ۲» بچسبان و بزن <b>ورود به پنل</b>. تمام! داشبورد ترافیک، بازدیدکننده‌ها و حملاتت جلوت باز می‌شود.</p></span>
+      <span class="check">✓</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔐 کلیدت چه دسترسی‌هایی دارد؟ (و چرا؟)</h3>
+    <div class="perm">
+      <span class="p-ic" style="background:rgba(56,189,248,.14)">🌐</span>
+      <span><b>خواندن دامنه‌ها (Zone · Read)</b><small>تا دامنه‌های حساب‌ات را پیدا کند و فهرست آن‌ها را در پنل نشان دهد.</small></span>
+    </div>
+    <div class="perm">
+      <span class="p-ic" style="background:rgba(139,92,246,.14)">📊</span>
+      <span><b>خواندن تحلیل‌ها (Analytics · Read)</b><small>مهم‌ترین‌ها از همه: چند گیگ ترافیک، چند نفر وارد شدند، از کدام کشورها و کدام آی‌پی‌ها.</small></span>
+    </div>
+    <div class="perm">
+      <span class="p-ic" style="background:rgba(251,191,36,.12)">🛡️</span>
+      <span><b>خواندن و ویرایش فایروال (Firewall · Read + Edit)</b><small>رویدادهای حملات را ببینی و با یک کلیک آی‌پی حمله‌گر را مسدود کنی؛ حتی حالت «زیر آتش».</small></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔒 امنیتِ کلیدت — مهم بخوان</h3>
+    <div class="note">
+      ✓ کلید <b>فقط در مرورگر خودت</b> (حافظه‌ی محلی) ذخیره می‌شود؛ هیچ سروری، هیچ دیتابیس و هیچ نفر سوم آن را نمی‌بیند.<br>
+      ✓ سپهر یک فایل مستقل است بدون بک‌اند؛ فقط از مرورگر تو به <span class="ltr">api.cloudflare.com</span> زده می‌شود.<br>
+      ✓ هر وقت خواستی، از همان صفحه‌ی <span class="ltr">API Tokens</span> کلودفلر کلید را <b>Revoke</b> کن و کل دسترسی‌ها می‌پرد.<br>
+      ✓ این کلید هیچ دسترسی «ویرایش DNS» یا «ویرایش تنظیمات حساس» ندارد — حتی اگر کسی آن را ببیند، کار خطرناکی از دستش برنمی‌آید.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>❓ سؤالات رایج</h3>
+    <details class="faq-item"><summary>صفحه‌ی ساخت کلید باز شد ولی دسترسی‌ها خالی است؟</summary>
+      <div class="fa">صفحه را یک‌بار بازم کن — گاهی کلودفلر فیلدهای پیش‌تنشده را دیرهنگام می‌کشد. اگر باز هم نبود، دستی انتخاب کن: بخش <b>Zone</b> را بزن، <b>Read</b> را فعال کن، بعد <b>Analytics</b> را <b>Read</b> و <b>Firewall</b> را <b>Edit</b>. دامنه‌ها را <span class="ltr">Include all zones</span> بگذار.</div></details>
+    <details class="faq-item"><summary>پنل گفت «کلید نامعتبر»؟</summary>
+      <div class="fa">۱) موقع کپی‌کردن، فاصله‌ی قبل و بعد کلید را پاک کن. ۲) مطمئن شو کلیدِ <i>دقیقاً</i> همین ساختار را ساختی (سه دسترسی بالا). ۳) اگر کلیدت از قبل ساخته شده با دسترسی‌های دیگری، بسازش کن و با همین کلید جادویی یکی جدید بساز.</div></details>
+    <details class="faq-item"><summary>«Account ID» چیست و کِی باید واردش کنم؟</summary>
+      <div class="fa">سپهر معمولاً خودش همه‌چیز را پیدا می‌کند. فقط اگر پنل از تو Account ID خواست: در داشبورد کلودفلر، آدرس بالای مرورگرت را نگاه کن — <span class="ltr">dash.cloudflare.com/</span><b>اینجای ۳۲ کاراکتری</b><span class="ltr">/...</span> — همان را کپی کن و در کادر پنل بچسبان.</div></details>
+    <details class="faq-item"><summary>آیا باید برای هر مرورگر/گوشی یک کلید بسازم؟</summary>
+      <div class="fa">نه. همان یک کلید را در هر جایی که می‌خواهی استفاده کن (گوشی، لپ‌تاپ، مرورگر دیگر) — همان‌طور که رمز یک حساب، همه‌جا یکی است. اگر خواستی، می‌توانی برای هر دستگاه کلید جدا هم بسازی.</div></details>
+    <details class="faq-item"><summary>چطور کلید را برای همیشه بی‌اثر کنم؟</summary>
+      <div class="fa">به <span class="ltr">dash.cloudflare.com/profile/api-tokens</span> برو، در لیست کلیدها آن را پیدا کن، روی <span class="ltr">⋯</span> بزن و <b>Revoke Token</b>. فوری، همه‌ی دسترسی‌های آن می‌پرد.</div></details>
+    <details class="faq-item"><summary>اگر از اکانت فرعی/مشترک استفاده می‌کنم چه؟</summary>
+      <div class="fa">مهم نیست اکانتت چه نوعی باشد؛ به شرط آنکه برای دامنه‌هایت دسترسی داشته باشی. کلید جادویی روی <b>همه‌ی</b> حساب‌ها و دامنه‌های حسابت تنظیم می‌شود و سپهر در همین حساب می‌چرخد.</div></details>
+  </div>
+
+  <div class="finale">
+    <b>✦ آماده‌ای؟</b>
+    <p>کلیدت را گرفت؟ حالا فقط همین دکمه را بزن و خوش اومد بگو — داشبورد منتظرته.</p>
+    <a class="btn big" href="index.html">برو به پنل سپهر و کلید را بچسبون ←</a>
+  </div>
+
+  <div class="foot">
+    پنل سپهر v1.0 · گام ۱ از ۲ — گرفتن کلید<br>
+    با ساختن کلید، فقط به <b>خودت</b> دسترسی می‌دهی؛ هیچ داده‌ای به هیچ‌جا ارسال نمی‌شود.
+  </div>
+</div>
+
+<script>
+"use strict";
+(function(){
+  // magic pre-filled token URL (official Cloudflare template URL format)
+  const perms = [
+    {key:"zone", type:"read"},
+    {key:"analytics", type:"read"},
+    {key:"firewall_services", type:"edit"}
+  ];
+  const url = "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys="
+    + encodeURIComponent(JSON.stringify(perms))
+    + "&accountId=*&zoneId=all&name=" + encodeURIComponent("Sepahar Panel");
+  $("#magicBtn").href = url;
+
+  // wizard progress (click a step to mark it done)
+  const steps = [...document.querySelectorAll(".wstep")];
+  const doneSet = new Set();
+  steps.forEach(s=>{
+    s.addEventListener("click", ()=>{
+      const n = s.dataset.step;
+      if(doneSet.has(n)){ doneSet.delete(n); s.classList.remove("done"); }
+      else { doneSet.add(n); s.classList.add("done"); }
+    });
+  });
+
+  // logo
+  const svg = `<svg viewBox="0 0 64 64" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs><circle cx="32" cy="32" r="26" stroke="url(#lg)" stroke-width="3.5" opacity=".85"/><ellipse cx="32" cy="32" rx="26" ry="10" stroke="url(#lg)" stroke-width="1.4" opacity=".4" transform="rotate(-24 32 32)"/><path d="M32 15l4.6 12.4L49 32l-12.4 4.6L32 49l-4.6-12.4L15 32l12.4-4.6z" fill="url(#lg)"/><circle cx="52" cy="14" r="2" fill="#7dd3fc"/><circle cx="12" cy="48" r="1.6" fill="#c4b5fd"/></svg>`;
+  document.querySelectorAll("[data-logo]").forEach(el=>el.innerHTML=svg);
+})();
+function $(s){ return document.querySelector(s); }
+</script>
+</body>
+</html>

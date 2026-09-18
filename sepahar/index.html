@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060a14">
+<meta name="description" content="پنل سپهر — مرکز فرماندهی کلودفلر؛ ترافیک، بازدیدکننده‌ها و حملات در یک نگاه">
+<title>سپهر | پنل فرماندهی کلودفلر</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Cpath d='M32 14l4.8 13.2L50 32l-13.2 4.8L32 50l-4.8-13.2L14 32l13.2-4.8z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a14; --bg2:#0a1020;
+  --card:rgba(255,255,255,.038); --card2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --txt:#e8edf7; --txt2:#9aa7bd; --txt3:#5d6b84;
+  --cy:#38bdf8; --vi:#8b5cf6; --pu:#c084fc; --gr:#34d399; --am:#fbbf24; --ro:#fb7185; --bl:#60a5fa;
+  --grad:linear-gradient(135deg,#38bdf8 0%,#818cf8 55%,#c084fc 100%);
+  --r:18px; --r2:12px;
+  --sh:0 10px 40px -12px rgba(2,8,23,.9);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Vazirmatn,system-ui,"Segoe UI",Tahoma,sans-serif;
+  background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;line-height:1.7;
+}
+::selection{background:rgba(99,102,241,.4)}
+a{color:var(--cy);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+input,select{font-family:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+::-webkit-scrollbar-track{background:transparent}
+.ltr{direction:ltr;unicode-bidi:embed;font-family:Vazirmatn,monospace,monospace}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* ============ background aurora ============ */
+#bgfx{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+#bgfx .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 26s ease-in-out infinite alternate}
+#bgfx .o1{width:56vw;height:56vw;background:radial-gradient(circle,rgba(56,189,248,.22),transparent 65%);top:-22vw;inset-inline-start:-12vw}
+#bgfx .o2{width:48vw;height:48vw;background:radial-gradient(circle,rgba(139,92,246,.2),transparent 65%);bottom:-20vw;inset-inline-end:-10vw;animation-delay:-8s}
+#bgfx .o3{width:34vw;height:34vw;background:radial-gradient(circle,rgba(192,132,252,.14),transparent 65%);top:38vh;inset-inline-start:38vw;animation-delay:-15s}
+#bgfx .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4vw,3vh,0) scale(1.12)}}
+/* ============ logo ============ */
+.logo{width:44px;height:44px;flex:0 0 auto}
+.logo svg{width:100%;height:100%;filter:drop-shadow(0 0 14px rgba(129,140,248,.45))}
+/* ============ onboarding ============ */
+#view-onboard{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 18px}
+.ob-wrap{width:100%;max-width:660px;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.ob-head{text-align:center;margin-bottom:34px}
+.ob-head .logo{width:76px;height:76px;margin:0 auto 18px}
+.ob-head h1{font-size:clamp(30px,6vw,44px);font-weight:900;letter-spacing:-.5px}
+.ob-head p{color:var(--txt2);margin-top:10px;font-size:15.5px}
+.ob-card{
+  display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden;
+  transition:.25s;backdrop-filter:blur(14px);
+}
+a.ob-card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.5);box-shadow:0 14px 44px -14px rgba(56,189,248,.35);text-decoration:none}
+.ob-card.primary{border-color:rgba(129,140,248,.42);background:linear-gradient(135deg,rgba(56,189,248,.1),rgba(139,92,246,.1))}
+.ob-step{
+  width:42px;height:42px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;
+  background:var(--grad);color:#04101d;font-weight:900;font-size:19px;box-shadow:0 6px 20px -6px rgba(129,140,248,.7)
+}
+.ob-card .tx b{display:block;font-size:16.5px;font-weight:800}
+.ob-card .tx small{color:var(--txt2);font-size:12.5px;display:block;margin-top:2px}
+.ob-card .arr{margin-inline-start:auto;font-size:22px;color:var(--cy);opacity:.85}
+.ob-row{display:flex;gap:10px;margin-top:12px;width:100%}
+.ob-row input{
+  flex:1;background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:var(--r2);
+  color:var(--txt);padding:12px 14px;font-size:14px;outline:none;transition:.2s;min-width:0
+}
+.ob-row input:focus{border-color:rgba(56,189,248,.6);box-shadow:0 0 0 3px rgba(56,189,248,.15)}
+.btn{
+  border:0;border-radius:var(--r2);padding:12px 22px;font-size:14.5px;font-weight:800;
+  background:var(--grad);color:#04101d;transition:.2s;white-space:nowrap;
+  box-shadow:0 8px 24px -8px rgba(129,140,248,.65)
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn:active{transform:none}
+.btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line2);box-shadow:none}
+.btn.sm{padding:8px 14px;font-size:12.5px;border-radius:10px}
+.btn.danger{background:linear-gradient(135deg,#fb7185,#f43f5e);color:#2a050c}
+.btn[disabled]{opacity:.55;pointer-events:none}
+.ob-hint{margin-top:10px;font-size:12.5px;color:var(--am);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ob-hint input{background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:8px 12px;font-size:12.5px;outline:none;width:220px}
+.ob-demo{
+  display:block;margin:26px auto 0;background:none;border:1px dashed var(--line2);color:var(--txt2);
+  padding:11px 26px;border-radius:99px;font-size:13.5px;transition:.25s
+}
+.ob-demo:hover{color:var(--txt);border-color:var(--cy);box-shadow:0 0 24px -6px rgba(56,189,248,.4)}
+.ob-priv{margin-top:22px;text-align:center;color:var(--txt3);font-size:12.5px}
+/* ============ app shell ============ */
+#app{max-width:1340px;margin:0 auto;padding:0 18px 30px}
+header.top{
+  position:sticky;top:0;z-index:50;margin:0 -18px 18px;padding:12px 20px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:rgba(6,10,20,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand b{font-size:19px;font-weight:900}
+.brand small{display:block;color:var(--txt3);font-size:11px;letter-spacing:.4px}
+.zone-sel{position:relative}
+.zone-sel select{
+  appearance:none;background:var(--card2);color:var(--txt);border:1px solid var(--line2);
+  border-radius:11px;padding:9px 34px 9px 14px;font-size:13.5px;font-weight:700;outline:none;cursor:pointer;max-width:230px
+}
+.zone-sel::after{content:"▾";position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:var(--txt2);pointer-events:none;font-size:11px}
+.top .sp{flex:1}
+.live{
+  display:flex;align-items:center;gap:8px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);
+  color:var(--gr);border-radius:99px;padding:6px 14px;font-size:12.5px;font-weight:800
+}
+.live .dot{width:8px;height:8px;border-radius:50%;background:var(--gr);animation:pulse 1.6s infinite}
+.live.paused{background:rgba(255,255,255,.05);border-color:var(--line2);color:var(--txt3)}
+.live.paused .dot{background:var(--txt3);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}55%{box-shadow:0 0 0 7px rgba(52,211,153,0)}}
+.icon-btn{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--card2);
+  border:1px solid var(--line2);color:var(--txt2);transition:.2s;font-size:17px
+}
+.icon-btn:hover{color:var(--txt);border-color:var(--cy)}
+.icon-btn.spin svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* tabs */
+nav.tabs{display:flex;gap:8px;margin:2px 0 18px;overflow-x:auto;padding-bottom:4px}
+nav.tabs button{
+  border:1px solid transparent;background:transparent;color:var(--txt2);font-size:14px;font-weight:700;
+  padding:9px 18px;border-radius:12px;transition:.2s;white-space:nowrap
+}
+nav.tabs button:hover{color:var(--txt)}
+nav.tabs button.on{background:var(--grad);color:#04101d;box-shadow:0 8px 22px -8px rgba(129,140,248,.6)}
+/* banners */
+.banner{
+  border-radius:var(--r);padding:14px 18px;font-size:13.5px;margin-bottom:16px;display:flex;gap:12px;align-items:center;
+  border:1px solid;backdrop-filter:blur(10px)
+}
+.banner.err{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.4);color:#fecdd3}
+.banner.warn{background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.35);color:#fde68a}
+.banner.demo{background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.4);color:#bfdbfe}
+.banner .x{margin-inline-start:auto;cursor:pointer;opacity:.7;font-size:16px}
+.banner .x:hover{opacity:1}
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:16px}
+@media(max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;position:relative;overflow:hidden;
+  backdrop-filter:blur(14px);min-height:132px;display:flex;flex-direction:column;transition:.25s
+}
+.kpi:hover{border-color:var(--line2);transform:translateY(-2px)}
+.kpi .k-top{display:flex;align-items:center;gap:9px;color:var(--txt2);font-size:12.5px;font-weight:700}
+.kpi .k-ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:15px}
+.kpi .k-val{font-size:clamp(21px,2.2vw,27px);font-weight:900;margin-top:10px;letter-spacing:-.4px;line-height:1.25}
+.kpi .k-sub{font-size:11.5px;color:var(--txt3);margin-top:4px}
+.kpi .k-sub .up{color:var(--gr);font-weight:800}
+.kpi .k-sub .dn{color:var(--ro);font-weight:800}
+.kpi svg.spark{position:absolute;bottom:0;inset-inline-start:0;width:100%;height:34px;opacity:.5}
+/* cards & rows */
+.row{display:grid;gap:14px;margin-bottom:16px}
+.row.c32{grid-template-columns:2fr 1fr}
+.row.c3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:1000px){.row.c32,.row.c3{grid-template-columns:1fr}}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;
+  backdrop-filter:blur(14px);position:relative;overflow:hidden
+}
+.card h3{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.card h3 .hint{font-size:11px;color:var(--txt3);font-weight:400;margin-inline-start:auto}
+.tabs-mini{display:flex;gap:6px;margin-bottom:10px}
+.tabs-mini button{
+  font-size:12px;font-weight:700;color:var(--txt2);background:var(--card2);border:1px solid var(--line);
+  border-radius:9px;padding:5px 13px;transition:.2s
+}
+.tabs-mini button.on{background:var(--grad);color:#04101d;border-color:transparent}
+.chart-wrap{position:relative}
+.chart-wrap svg{width:100%;height:auto;display:block}
+.tip{
+  position:absolute;pointer-events:none;background:rgba(10,16,32,.96);border:1px solid var(--line2);
+  border-radius:10px;padding:8px 12px;font-size:12px;line-height:1.9;z-index:5;min-width:130px;
+  box-shadow:var(--sh);opacity:0;transition:opacity .12s
+}
+.tip b{font-size:12.5px}
+/* list rows */
+.lrow{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.lrow:last-child{border-bottom:0}
+.lrow .flag{font-size:19px;width:26px;text-align:center}
+.lrow .nm{font-size:13.5px;font-weight:700;min-width:86px}
+.lrow .bar{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.lrow .bar i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.lrow .vv{font-size:12px;color:var(--txt2);min-width:96px;text-align:left;direction:ltr}
+.lrow .ip{font-size:12.5px;direction:ltr;unicode-bidi:embed;font-weight:600}
+.lrow .mini-btn{
+  font-size:11px;font-weight:800;border-radius:8px;padding:4px 11px;border:1px solid rgba(251,113,133,.4);
+  background:rgba(251,113,133,.12);color:var(--ro);transition:.2s
+}
+.lrow .mini-btn:hover{background:rgba(251,113,133,.25)}
+.lrow .mini-btn.done{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.12);color:var(--gr)}
+/* badges */
+.bdg{
+  display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:99px;
+  padding:3px 11px;border:1px solid;white-space:nowrap
+}
+.bdg.cy{color:#7dd3fc;background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.35)}
+.bdg.vi{color:#c4b5fd;background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.4)}
+.bdg.am{color:#fcd34d;background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.35)}
+.bdg.ro{color:#fda4af;background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.4)}
+.bdg.gr{color:#6ee7b7;background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.35)}
+.bdg.gy{color:var(--txt2);background:rgba(255,255,255,.05);border-color:var(--line2)}
+/* feed */
+.feed-item{display:flex;gap:11px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.06);align-items:flex-start}
+.feed-item:last-child{border-bottom:0}
+.feed-item .f-ic{width:30px;height:30px;flex:0 0 auto;border-radius:9px;display:grid;place-items:center;font-size:13px;margin-top:2px}
+.feed-item .f-tx{font-size:12.5px;line-height:1.65;min-width:0}
+.feed-item .f-tx b{font-size:12.8px}
+.feed-item .f-tx .muted{color:var(--txt3);font-size:11.5px;display:block;direction:ltr;text-align:right}
+/* tables */
+.tbl-wrap{overflow-x:auto;margin-inline-start:-6px}
+table.tbl{width:100%;border-collapse:collapse;font-size:12.8px;min-width:640px}
+.tbl th{
+  text-align:right;color:var(--txt3);font-size:11.5px;font-weight:700;padding:9px 12px;
+  border-bottom:1px solid var(--line2);white-space:nowrap
+}
+.tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+.tbl tr:hover td{background:rgba(255,255,255,.025)}
+.tbl .ip{direction:ltr;unicode-bidi:embed;font-weight:700;color:#cdd8ea}
+.tbl .uri{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:right;color:var(--txt3)}
+/* chips row */
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.chip{
+  flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:13px 16px;display:flex;align-items:center;gap:12px;transition:.2s
+}
+.chip:hover{border-color:var(--line2)}
+.chip .c-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:16px}
+.chip b{display:block;font-size:19px;font-weight:900;line-height:1.3}
+.chip small{color:var(--txt3);font-size:11.5px;font-weight:700}
+/* filter row */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.filters select,.filters input{
+  background:rgba(0,0,0,.3);border:1px solid var(--line2);color:var(--txt);border-radius:11px;
+  padding:9px 13px;font-size:13px;outline:none;transition:.2s
+}
+.filters select:focus,.filters input:focus{border-color:rgba(56,189,248,.55)}
+.filters input{flex:1;min-width:180px}
+/* toggle */
+.tgl{position:relative;width:52px;height:29px;flex:0 0 auto;cursor:pointer}
+.tgl input{display:none}
+.tgl i{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:99px;transition:.25s;border:1px solid var(--line2)}
+.tgl i::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:.25s}
+.tgl input:checked+i{background:linear-gradient(135deg,#f43f5e,#fb7185);border-color:transparent}
+.tgl input:checked+i::after{transform:translateX(-23px)}
+.tgl.grn input:checked+i{background:linear-gradient(135deg,#059669,#34d399);border-color:transparent}
+/* mgmt cards */
+.mg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.mg-grid{grid-template-columns:1fr}}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.06);font-size:13px}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--txt3)}
+.kv .v{font-weight:700;text-align:left;direction:ltr;unicode-bidi:embed;max-width:60%;overflow-wrap:anywhere}
+.kv .v.fa{direction:rtl;unicode-bidi:normal;text-align:right}
+.qlink{
+  display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;
+  margin-bottom:9px;font-size:13.5px;font-weight:700;transition:.2s;color:var(--txt)
+}
+.qlink:hover{border-color:var(--cy);background:rgba(56,189,248,.06);text-decoration:none;transform:translateY(-1px)}
+.qlink small{color:var(--txt3);font-weight:400;font-size:11.5px;margin-inline-start:auto;direction:ltr}
+/* settings */
+.set-block{margin-bottom:22px}
+.set-block h4{font-size:13.5px;font-weight:800;color:var(--txt2);margin-bottom:10px}
+.set-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px dashed rgba(255,255,255,.06);flex-wrap:wrap}
+.set-row:last-child{border-bottom:0}
+.set-row .lab{flex:1;min-width:180px}
+.set-row .lab b{display:block;font-size:13.8px}
+.set-row .lab small{color:var(--txt3);font-size:11.8px}
+.token-box{
+  display:flex;gap:8px;align-items:center;background:rgba(0,0,0,.3);border:1px solid var(--line2);
+  border-radius:11px;padding:9px 13px;flex:1;min-width:240px;max-width:460px
+}
+.token-box code{direction:ltr;unicode-bidi:embed;font-size:12.5px;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+/* skeleton */
+.skel{position:relative;overflow:hidden;background:rgba(255,255,255,.05);border-radius:8px}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:sh 1.4s infinite}
+@keyframes sh{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+/* empty */
+.empty{text-align:center;padding:38px 16px;color:var(--txt3)}
+.empty .e-ic{font-size:38px;margin-bottom:12px;opacity:.7}
+.empty b{display:block;color:var(--txt2);font-size:14.5px;margin-bottom:5px}
+.empty small{font-size:12.5px}
+/* toasts */
+#toasts{position:fixed;bottom:22px;inset-inline-start:50%;transform:translateX(50%);z-index:200;display:flex;flex-direction:column;gap:9px;align-items:center}
+.toast{
+  background:rgba(10,16,32,.95);border:1px solid var(--line2);border-radius:13px;padding:12px 20px;
+  font-size:13.5px;font-weight:700;box-shadow:var(--sh);animation:tin .3s cubic-bezier(.2,.9,.3,1.4) both;max-width:88vw
+}
+.toast.ok{border-color:rgba(52,211,153,.5);color:#a7f3d0}
+.toast.err{border-color:rgba(244,63,94,.55);color:#fecdd3}
+.toast.info{border-color:rgba(56,189,248,.5);color:#bae6fd}
+@keyframes tin{from{opacity:0;transform:translateY(16px) scale(.92)}to{opacity:1;transform:none}}
+.toast.out{animation:tout .3s forwards}
+@keyframes tout{to{opacity:0;transform:translateY(10px) scale(.94)}}
+footer.foot{margin-top:26px;text-align:center;color:var(--txt3);font-size:12px;line-height:2}
+.spin-line{display:flex;gap:4px;justify-content:center;padding:20px}
+.spin-line i{width:8px;height:8px;border-radius:50%;background:var(--cy);animation:bnc 1.1s infinite}
+.spin-line i:nth-child(2){animation-delay:.15s;background:var(--bl)}
+.spin-line i:nth-child(3){animation-delay:.3s;background:var(--vi)}
+@keyframes bnc{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-7px);opacity:1}}
+.legend{display:flex;gap:13px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--txt2)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:5px;vertical-align:1px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="bgfx"><div class="grid"></div><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+
+<!-- ================= ONBOARDING ================= -->
+<section id="view-onboard">
+  <div class="ob-wrap">
+    <div class="ob-head">
+      <div class="logo" data-logo></div>
+      <h1>پنل <span class="grad">سپهر</span></h1>
+      <p>مرکز فرماندهی کلودفلر — ترافیک، بازدیدکننده‌ها و حملاتِ سایتت، همه در یک نگاه</p>
+    </div>
+
+    <a class="ob-card primary" href="get-key.html" id="cardKey">
+      <span class="ob-step">۱</span>
+      <span class="tx"><b>اول کلیدت رو بگیر ←</b><small>راهنمای تصویری ۴ مرحله‌ای با کلیدِ جادویی؛ فقط ۲ دقیقه وقت می‌گیره</small></span>
+      <span class="arr">✦</span>
+    </a>
+
+    <div class="ob-card">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="ob-step">۲</span>
+          <span class="tx"><b>کلید رو اینجا بچسبون و وارد شو</b><small>توکن فقط در مرورگرِ خودت ذخیره می‌شود؛ هیچ سروری نمی‌بیندش</small></span>
+        </div>
+        <div class="ob-row">
+          <input id="tokenInput" type="password" dir="ltr" placeholder="Paste your Cloudflare API token…" autocomplete="off" spellcheck="false">
+          <button class="btn" id="btnConnect">ورود به پنل</button>
+        </div>
+        <div class="ob-hint" id="acctWrap" hidden>
+          <span>شناسایی خودکار اکانت ممکن نبود — <b>Account ID</b> خودت را وارد کن (از آدرس داشبورد کلودفلر، بعد از <span class="ltr">dash.cloudflare.com/</span> کپی می‌شود):</span>
+          <input id="accountIdInput" dir="ltr" placeholder="Account ID (32 hex)">
+        </div>
+        <div class="ob-hint" id="connMsg" hidden></div>
+      </div>
+    </div>
+
+    <button class="ob-demo" id="btnDemo">👁️ بدون کلید، نسخه نمایشی را ببین</button>
+    <div class="ob-priv">🔒 سپهر کاملاً سمتِ مرورگر کار می‌کند؛ کلید و داده‌ها فقط بین مرورگر تو و کلودفلر رفت‌وآمد می‌کنند.</div>
+  </div>
+</section>
+
+<!-- ================= APP ================= -->
+<div id="app" hidden>
+  <header class="top">
+    <div class="brand">
+      <div class="logo" data-logo></div>
+      <div><b>پنل <span class="grad">سپهر</span></b><small>SEPAHAR · CLOUDFLARE COMMAND</small></div>
+    </div>
+    <div class="zone-sel"><select id="zoneSel" title="انتخاب دامنه"></select></div>
+    <div class="sp"></div>
+    <div class="live" id="livePill" title="وضعیت به‌روزرسانی خودکار"><span class="dot"></span><span id="liveTxt">LIVE</span></div>
+    <button class="icon-btn" id="btnRefresh" title="به‌روزرسانی فوری">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
+    </button>
+    <button class="icon-btn" id="btnHome" title="تنظیمات">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <nav class="tabs" id="tabNav">
+    <button data-tab="dash" class="on">📊 داشبورد</button>
+    <button data-tab="sec">🛡️ امنیت و حملات</button>
+    <button data-tab="mgmt">⚙️ مدیریت</button>
+    <button data-tab="set">🔧 تنظیمات</button>
+  </nav>
+
+  <div id="bannerArea"></div>
+
+  <!-- ===== TAB: DASHBOARD ===== -->
+  <section id="tab-dash">
+    <div class="kpis" id="kpiGrid"></div>
+    <div class="row c32">
+      <div class="card">
+        <h3>📈 ترافیک ۳۰ روز اخیر <span class="hint" id="chartTotal"></span></h3>
+        <div class="tabs-mini" id="chartTabs">
+          <button data-m="gb" class="on">حجم (GB)</button>
+          <button data-m="req">درخواست</button>
+        </div>
+        <div class="chart-wrap" id="mainChart"></div>
+      </div>
+      <div class="card">
+        <h3>🛡️ امنیت ۲۴ ساعت اخیر <span class="hint" id="sec24Total"></span></h3>
+        <div class="chart-wrap" id="secChart"></div>
+        <div class="legend" id="secLegend"></div>
+      </div>
+    </div>
+    <div class="row c3">
+      <div class="card"><h3>🌍 کشورهای برتر <span class="hint">امروز</span></h3><div id="countryList"></div></div>
+      <div class="card"><h3>📱 دستگاه‌های پرتحرک <span class="hint">امروز · تا ۶۰ آی‌پی</span></h3><div id="ipList"></div></div>
+      <div class="card"><h3>⚡ جدیدترین رویدادها <span class="hint">امنیتی</span></h3><div id="feedList"></div></div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: SECURITY ===== -->
+  <section id="tab-sec" hidden>
+    <div class="chips" id="secChips"></div>
+    <div class="row c32">
+      <div class="card">
+        <h3>🚨 رویدادهای امنیتی (۲۴ ساعت اخیر)</h3>
+        <div class="filters">
+          <select id="fType">
+            <option value="">همه انواع</option>
+            <option value="waf">WAF</option>
+            <option value="firewall">فایروال</option>
+            <option value="rate_limit">Rate Limit</option>
+            <option value="bps">DDoS (bps)</option>
+            <option value="req">DDoS (req)</option>
+          </select>
+          <select id="fAction">
+            <option value="">همه اقدامات</option>
+            <option value="blocked">مسدود شده</option>
+            <option value="challenge">چالش</option>
+            <option value="allow">عبور داده شده</option>
+          </select>
+          <input id="fSearch" dir="ltr" placeholder="جستجوی آی‌پی…" spellcheck="false">
+        </div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>زمان</th><th>نوع</th><th>اقدام</th><th>آی‌پی حمله‌گر</th><th>کشور</th><th>هسته (host)</th><th style="width:110px">اقدام سریع</th></tr></thead>
+            <tbody id="secTbody"></tbody>
+          </table>
+        </div>
+        <div style="text-align:center;margin-top:14px"><button class="btn ghost sm" id="btnMoreEvents">مشاهده رویدادهای بیشتر</button></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px">
+          <h3>⚔️ حالت «زیر آتش»</h3>
+          <div class="set-row" style="border:0;padding:6px 0">
+            <label class="tgl"><input type="checkbox" id="iatMode"><i></i></label>
+            <div class="lab"><b>Active Challenges</b><small>هر بازدیدکننده با چالش «من ربات نیستم» روبرو می‌شود؛ در اوج حمله DDoS فعالش کن</small></div>
+          </div>
+          <div id="iatStatus" style="font-size:12px;color:var(--txt3);padding:4px 0 8px 56px"></div>
+        </div>
+        <div class="card">
+          <h3>⛓️ آی‌پی‌های مسدودشده (قفل‌ها) <span class="hint" id="locksCount"></span></h3>
+          <div id="locksList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: MANAGEMENT ===== -->
+  <section id="tab-mgmt" hidden>
+    <div class="mg-grid">
+      <div class="card">
+        <h3>🌐 اطلاعات دامنه</h3>
+        <div id="zoneInfo"></div>
+      </div>
+      <div class="card">
+        <h3>🚀 دسترسی سریع به داشبورد کلودفلر</h3>
+        <div id="quickLinks"></div>
+        <p style="font-size:11.5px;color:var(--txt3);margin-top:10px">با کلیک در تب جدید، بخش مربوطه در داشبورد رسمی کلودفلر باز می‌شود.</p>
+      </div>
+      <div class="card">
+        <h3>📡 وضعیت شبکه کلودفلر برای دامنه</h3>
+        <div id="zoneNet"></div>
+      </div>
+      <div class="card">
+        <h3>🌍 انتشار آنلاین این پنل</h3>
+        <p style="font-size:13px;color:var(--txt2);margin-bottom:12px">سپهر یک فایل <span class="ltr">HTML</span> مستقل است. برای اینکه لینک اینترنتی داشته باشد و به دیگران بدهی:</p>
+        <div class="qlink" onclick="void 0">
+          <span>۱. همین پوشه <span class="ltr">sepahar/</span> در گیت‌هاب</span><small>github.com</small>
+        </div>
+        <div class="qlink" onclick="void 0"><span>۲. Settings ← Pages ← Branch: main ← Folder: /sepahar</span><small>⚙️</small></div>
+        <div class="qlink" onclick="void 0"><span>۳. لینک <span class="ltr">https://&lt;user&gt;.github.io/&lt;repo&gt;/sepahar/</span></span><small>🔗</small></div>
+        <p style="font-size:11.5px;color:var(--txt3);margin-top:8px">یا در Cloudflare Pages: Contents ← Add a deployment و همین دو فایل را بکش و رها کن. کلیدِ هر کاربر همواره در مرورگرِ خودش می‌ماند.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: SETTINGS ===== -->
+  <section id="tab-set" hidden>
+    <div class="card" style="max-width:760px">
+      <div class="set-block">
+        <h4>🔑 اتصال و کلید</h4>
+        <div class="set-row">
+          <div class="token-box"><code id="tokenView">—</code><button class="icon-btn" id="btnTokCopy" title="کپی" style="width:32px;height:32px;font-size:13px">⧉</button></div>
+          <button class="btn ghost sm" id="btnTokTest">تست اتصال</button>
+        </div>
+        <div class="set-row">
+          <div class="lab"><b>حالت فعلی</b><small id="modeLabel">—</small></div>
+          <button class="btn ghost sm" id="btnModeSwap">تغییر حالت</button>
+        </div>
+      </div>
+      <div class="set-block">
+        <h4>🔄 به‌روزرسانی</h4>
+        <div class="set-row">
+          <div class="lab"><b>فاصله به‌روزرسانی خودکار</b><small>در حالت LIVE، داده‌ها هر چند ثانیه تازه می‌شوند</small></div>
+          <div class="filters" style="margin:0">
+            <select id="setInterval">
+              <option value="30">هر ۳۰ ثانیه</option>
+              <option value="60" selected>هر ۶۰ ثانیه</option>
+              <option value="120">هر ۲ دقیقه</option>
+              <option value="300">هر ۵ دقیقه</option>
+            </select>
+          </div>
+        </div>
+        <div class="set-row">
+          <div class="lab"><b>حالت زنده (LIVE)</b><small>با غیرفعال کردن، مصرف API به صفر می‌رسد</small></div>
+          <label class="tgl grn"><input type="checkbox" id="setLive" checked><i></i></label>
+        </div>
+      </div>
+      <div class="set-block">
+        <h4>🧹 امنیت مرورگر</h4>
+        <div class="set-row">
+          <div class="lab"><b>حذف کلید از این دستگاه</b><small>کلید از حافظه‌ی مرورگر پاک می‌شود؛ برای لغو از صفحه API Tokens کلودفلر</small></div>
+          <button class="btn danger sm" id="btnWipe">حذف کلید و خروج</button>
+        </div>
+      </div>
+      <div class="set-block" style="border:0">
+        <h4>ℹ️ درباره سپهر</h4>
+        <p style="font-size:12.8px;color:var(--txt3);line-height:2.1">
+          پنل سپهر v1.0 — مرکز فرماندهی کلودفلر در یک فایل مستقل، بدون بک‌اند، بدون دیتابیس، بدون واسطه.
+          تمام محاسبات و نمایش در مرورگر شماست و داده‌ها مستقیماً از API رسمی کلودفلر می‌آیند.
+          طراحی و توسعه: <span class="ltr">Mahmoud4366</span> · لایسنس MIT
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    سپهر v1.0 · ساخته‌شده با ♥ برای مدیریت حرفه‌ای کلودفلر<br>
+    کلید شما فقط در مرورگر خودتان است — هیچ داده‌ای به هیچ سرور ثالثی نمی‌رود
+  </footer>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+"use strict";
+/* ================================================================
+   سپهر (Sepahar) — Cloudflare Command Center
+   single-file · zero-backend · client-side only
+   ================================================================ */
+const LS_KEY = "sepahar.v1";
+const API = "https://api.cloudflare.com/client/v4";
+const CF_FREE_DAILY_REQ = 100000; // worker daily limit (reference)
+
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const faNum = new Intl.NumberFormat("fa-IR");
+const faNum1 = new Intl.NumberFormat("fa-IR", {maximumFractionDigits:1});
+const faNum2 = new Intl.NumberFormat("fa-IR", {maximumFractionDigits:2});
+const fN = n => faNum.format(Math.round(Number(n)||0));
+const fN1 = n => faNum1.format(Number(n)||0);
+const fN2 = n => faNum2.format(Number(n)||0);
+
+const COUNTRY_FA = {IR:"ایران",US:"آمریکا",DE:"آلمان",GB:"بریتانیا",NL:"هلند",AE:"امارات متحده",SA:"عربستان",TR:"ترکیه",IN:"هند",QA:"قطر",FR:"فرانسه",RU:"روسیه",CN:"چین",JP:"ژاپون",KR:"کره جنوبی",BR:"برزیل",CA:"کانادا",AU:"استرالیا",SG:"سنگاپور",MY:"مالزی",PK:"پاکستان",EG:"مصر",KW:"کویت",BH:"بحرین",OM:"عمان",JO:"اردن",LB:"لبنان",AF:"افغانستان",IT:"ایتالیا",ES:"اسپانیا",ID:"اندونزی",TH:"تایلند",VN:"ویتنام",PH:"فیلیپین",BD:"بنگلادش",MX:"مکزیک",AR:"آرژانتین",PL:"لهستان",SE:"سوئد",CH:"سوئیس",FI:"فنلاند",DK:"دانمارک",NO:"نروژ",IL:"اسرائیل",UZ:"ازبکستان",TM:"ترکمنستان",KZ:"قزاقستان",GE:"گرجستان",AM:"ارمنستان",AZ:"آذربایجان",NG:"نیجریه",ZA:"آفریقای جنوبی",NZ:"نیوزیلند",PT:"پرتغال",BE:"بلژیک",AT:"اتریش",GR:"یونان",TZ:"تانزانیا",GN:"گینه",LK:"سریلانکا",NP:"نپال",EG:"مصر"};
+const ctry = c => COUNTRY_FA[c] || (c || "نامشخص");
+const flag = cc => { if(!cc || cc.length!==2) return "🌐"; cc=cc.toUpperCase(); return String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))); };
+
+const ACTION_FA = {blocked:"مسدود شد",block:"مسدود شد",challenge:"چالش",js_challenge:"چالش JS",managed_challenge:"چالش هوشمند",bypass:"عبور",allow:"اجازه",log:"ثبت",dnssec_failing:"DNSSEC",reset:"قطع",block_on_malicious_score:"مسدود (شک)",challenge_on_score:"چالش (شک)"};
+const actFa = a => ACTION_FA[a] || (a || "—");
+const TYPE_FA = {waf:"WAF",firewall:"فایروال",rate_limit:"محدودساز",bps:"DDoS·bps",req:"DDoS·req",challenge:"چالش"};
+const TYPE_COLOR = {waf:"cy",firewall:"vi",rate_limit:"am",bps:"ro",req:"ro",challenge:"gy"};
+
+/* ---------- state ---------- */
+let S = {
+  token:"", accountId:"", zones:[], zoneId:"",
+  demo:false, live:true, refreshSec:60, tab:"dash",
+  chartMode:"gb", eventPage:1,
+  data:{ series30:[], dayTotals:[], countries:[], ips:[], overview:null, events:[], zone:null }
+};
+try { const saved = JSON.parse(localStorage.getItem(LS_KEY)||"null"); if(saved) S = Object.assign(S, saved); } catch(e){}
+function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({token:S.token,accountId:S.accountId,zones:S.zones.map(z=>({id:z.id,name:z.name})),zoneId:S.zoneId,demo:S.demo,live:S.live,refreshSec:S.refreshSec})); }catch(e){} }
+
+/* ---------- api ---------- */
+let rateLimitedUntil = 0;
+async function cf(path, {method="GET", body=null} = {}){
+  const ctrl = new AbortController();
+  const t = setTimeout(()=>ctrl.abort(), 14000);
+  try{
+    const res = await fetch(API+path, {
+      method, signal:ctrl.signal,
+      headers:{ "Authorization":"Bearer "+S.token, "Content-Type":"application/json", "User-Agent":"Sepahar-Panel/1.0" },
+      body: body ? JSON.stringify(body) : null
+    });
+    let json = null; try{ json = await res.json(); }catch(e){}
+    if(!res.ok){
+      const code = json && json.errors && json.errors[0] && json.errors[0].code;
+      const msg  = json && json.errors && json.errors[0] && json.errors[0].message;
+      const err = new Error(msg || ("HTTP "+res.status));
+      err.status = res.status; err.code = code;
+      if(res.status===429 || code===10020){ rateLimitedUntil = Date.now()+45000; err.rateLimited = true; }
+      if([401,403].includes(res.status) || [10000,10001,10002,10026,10028].includes(code||0)) err.auth = true;
+      throw err;
+    }
+    if(!json) return null;
+    if(json.success===false) throw new Error((json.errors && json.errors[0] && json.errors[0].message) || "خطای API کلودفلر");
+    return json.result !== undefined ? json.result : json;
+  } finally { clearTimeout(t); }
+}
+
+/* ---------- demo data ---------- */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function demoData(){
+  const now = new Date();
+  const rnd = mulberry32(now.getFullYear()*372+now.getMonth()*31+now.getDate());
+  const series30 = [];
+  for(let i=29;i>=0;i--){
+    const d = new Date(now); d.setDate(d.getDate()-i);
+    const dow = d.getDay();
+    const week = (dow===5||dow===6) ? 1.45 : 1;           // پنجشنبه/جمعه پرتراکم
+    const base = 90000 + rnd()*140000;
+    const req = Math.round(base*week*(0.82+rnd()*0.4));
+    const gb  = req*(0.000012+rnd()*0.000006);            // ≈ 1.2–1.8 KB/req
+    series30.push({d, req, bytes:Math.round(gb*1073741824)});
+  }
+  const cw = [["IR",.34],["US",.16],["DE",.1],["GB",.08],["AE",.07],["SA",.05],["NL",.05],["TR",.04],["IN",.03],["QA",.025]];
+  const tot = series30[29].req;
+  const countries = cw.map(([c,w])=>({code:c,count:Math.round(tot*w*(0.9+rnd()*0.2)),bytes:Math.round(series30[29].bytes*w*(0.9+rnd()*0.2))}));
+  const ips=[]; const used=new Set();
+  for(let i=0;i<14;i++){ let ip; do{ ip=[80+Math.floor(rnd()*150),Math.floor(rnd()*255),Math.floor(rnd()*255),Math.floor(rnd()*255)].join("."); }while(used.has(ip)); used.add(ip); ips.push({ip,count:Math.round(tot*(0.05-rnd()*0.035))}); }
+  ips.sort((a,b)=>b.count-a.count);
+  const types=["waf","waf","waf","firewall","firewall","rate_limit","bps","req","challenge"];
+  const events=[];
+  for(let i=0;i<56;i++){
+    const dt=new Date(now - rnd()*24*3600*1000);
+    const ty=types[Math.floor(rnd()*types.length)];
+    const act= rnd()<.62?"blocked":(rnd()<.5?"managed_challenge":"js_challenge");
+    const src = ips[Math.floor(rnd()*6)];
+    const cc  = countries[Math.floor(rnd()*6)].code;
+    const rules = ty==="waf" ? ["OWRS Core: SQLi","OWRS Core: XA","OWRS Core: XSS","SQLi in URI"] : ty==="rate_limit" ? "Rate Limit rule" : ty==="bps" ? "bps DDoS rule" : ty==="req" ? "request-rate DDoS" : "IP Access Rule";
+    events.push({time:dt.toISOString(),type:ty,action:act,ip:src.ip,country_code:cc,hostname:pickDomain(),uri:"/"+pickUri(),rule:rules});
+  }
+  events.sort((a,b)=>b.time.localeCompare(a.time));
+  const hours = {};
+  for(let h=0;h<24;h++){
+    const n = Math.max(0, Math.round((8+rnd()*30)*(h>20||h<2 ? 1.6 : 1)));
+    hours[h] = { waf:Math.round(n*(0.4+rnd()*0.25)), firewall:Math.round(n*(0.15+rnd()*0.2)), ratelimit:Math.round(n*(0.1+rnd()*0.15)), bps:Math.round(n*(0.05+rnd()*0.15)), req:Math.round(n*(0.05+rnd()*0.1)), challenge:0 };
+  }
+  return { series30, countries, ips, events, overview:{hours} };
+}
+function pickDomain(){ const d=["cdn.sepahar.example","app.sepahar.example","stream.sepahar.example"]; return d[Math.floor(Math.random()*d.length)]; }
+function pickUri(){ const u=["/","/api/v1/status","/config.json","/sub/abc","/panel","/video/big.mp4","/img/logo.png","/download"]; return u[Math.floor(Math.random()*u.length)]; }
+
+/* ---------- formatting helpers ---------- */
+function gbStr(bytes){
+  const gb = Number(bytes||0)/1073741824;
+  if(gb>=1024) return fN1(gb/1024)+" TB";
+  if(gb>=1)   return fN1(gb)+" GB";
+  if(gb>=0.001) return fN1(gb*1024)+" MB";
+  return fN(Number(bytes||0)/1024)+" KB";
+}
+const faWeekday = d => new Intl.DateTimeFormat("fa-IR",{weekday:"long"}).format(d);
+const faDate = d => new Intl.DateTimeFormat("fa-IR",{day:"numeric",month:"long"}).format(d);
+const faTime = iso => new Intl.DateTimeFormat("fa-IR",{hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
+function relTime(iso){
+  const s = Math.max(0,(Date.now()-new Date(iso).getTime())/1000);
+  if(s<60) return "هم‌اکنون";
+  if(s<3600) return fN(s/60)+" دقیقه پیش";
+  if(s<86400) return fN(s/3600)+" ساعت پیش";
+  return fN(s/86400)+" روز پیش";
+}
+function isoDay(d){ return d.toISOString().slice(0,10); }
+
+/* ---------- charts (hand-rolled SVG) ---------- */
+function areaChart(el, items, {value, color="url(#ag)", unit, name}={}){
+  const W=760,H=250,P={t:16,r:14,b:30,l:14};
+  const n=items.length; if(!n){ el.innerHTML=emptyHtml("داده‌ای موجود نیست","این دامنه هنوز ترافیکی ندارد"); return; }
+  const vals = items.map(it=>value(it));
+  const max = Math.max(...vals,1);
+  const x = i => P.l + (W-P.l-P.r)*(n===1?0.5:i/(n-1));
+  const y = v => H-P.b - (H-P.t-P.b)*(v/max);
+  let dArea = `M ${x(0)} ${H-P.b}`;
+  let dLine = "";
+  items.forEach((it,i)=>{ dLine += (i? " L":"M") + ` ${x(i).toFixed(1)} ${y(value(it)).toFixed(1)}`; });
+  dArea += dLine + ` L ${x(n-1)} ${H-P.b} Z`;
+  const grid = [0.25,0.5,0.75,1].map(f=>{
+    const gy = H-P.b-(H-P.t-P.b)*f;
+    return `<line x1="${P.l}" y1="${gy}" x2="${W-P.r}" y2="${gy}" stroke="rgba(255,255,255,.06)"/><text x="${W-P.r}" y="${gy-5}" fill="rgba(154,167,189,.55)" font-size="10" text-anchor="end">${unit==="gb"?fN1(max*f*1)+" GB":fN(max*f)}</text>`;
+  }).join("");
+  const xl = [0, Math.floor(n/2), n-1].map(i=>`<text x="${x(i)}" y="${H-8}" fill="rgba(93,107,132,.9)" font-size="10.5" text-anchor="middle">${faDate(items[i].d)}</text>`).join("");
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}">
+    <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(99,179,255,.42)"/><stop offset="1" stop-color="rgba(99,179,255,0)"/></linearGradient></defs>
+    ${grid}
+    <path d="${dArea}" fill="${color}"/>
+    <path d="${dLine}" fill="none" stroke="#7cc4fb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle id="chDot" r="4.5" fill="#fff" stroke="#38bdf8" stroke-width="2.5" style="display:none"/>
+    <line id="chGuide" y1="${P.t}" y2="${H-P.b}" stroke="rgba(255,255,255,.25)" stroke-dasharray="3 4" style="display:none"/>
+    ${xl}
+  </svg><div class="tip" id="chTip"></div>`;
+  const svg = $("svg",el), tip = $("#chTip",el), dot = $("#chDot",el), guide = $("#chGuide",el);
+  svg.addEventListener("mousemove", ev=>{
+    const r = svg.getBoundingClientRect();
+    const px = (ev.clientX - r.left) * (W / r.width);
+    let i = Math.round((px - P.l) / (W-P.l-P.r) * (n-1)); i=Math.max(0,Math.min(n-1,i));
+    dot.style.display=""; guide.style.display="";
+    dot.setAttribute("cx",x(i)); dot.setAttribute("cy",y(value(items[i])));
+    guide.setAttribute("x1",x(i)); guide.setAttribute("x2",x(i));
+    tip.style.opacity=1;
+    tip.innerHTML = `<b>${faWeekday(items[i].d)} ${faDate(items[i].d)}</b><br>${name}: ${unit==="gb"? gbStr(items[i].bytes) : fN(items[i].req)+" درخواست"}`;
+    const tx = Math.min(Math.max(x(i)/W*100, 8), 78);
+    tip.style.insetInlineStart = "auto"; tip.style.left = tx+"%"; tip.style.top = "8px";
+  });
+  svg.addEventListener("mouseleave", ()=>{ tip.style.opacity=0; dot.style.display="none"; guide.style.display="none"; });
+}
+function barsChart(el, hours, totals){
+  const W=560,H=250,P={t:14,r:10,b:26,l:10};
+  const cats=[["waf","#38bdf8","WAF"],["firewall","#8b5cf6","فایروال"],["ratelimit","#fbbf24","Rate-Limit"],["bps","#fb7185","DDoS"],["req","#f472b6","DDoS·req"]];
+  const per = hours||{};
+  const maxH = Math.max(1,...[...Array(24).keys()].map(h=>{
+    const o=per[h]||per[String(h)]||{}; let s=0; cats.forEach(([k])=>s+=Number(o[k]||0)); return s;
+  }));
+  const bw = (W-P.l-P.r)/24;
+  let out="";
+  for(let h=0;h<24;h++){
+    const o = per[h]||per[String(h)]||{};
+    let s=0, yy=H-P.b;
+    const parts=[];
+    cats.forEach(([k,c])=>{
+      const v=Number(o[k]||0); if(!v) return;
+      const hh=(H-P.t-P.b)*(v/maxH);
+      parts.push(`<rect x="${(P.l+h*bw+1.5).toFixed(1)}" y="${(yy-hh).toFixed(1)}" width="${(bw-3).toFixed(1)}" height="${hh.toFixed(1)}" rx="2" fill="${c}" opacity=".9"/>`);
+      yy-=hh; s+=v;
+    });
+    out += parts.join("");
+    if(h%3===0) out += `<text x="${(P.l+h*bw+bw/2).toFixed(1)}" y="${H-7}" fill="rgba(93,107,132,.9)" font-size="9.5" text-anchor="middle">${fN(h)}</text>`;
+  }
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}">${out}</svg><div class="tip" id="bTip"></div>`;
+  const svg=$("svg",el), tip=$("#bTip",el);
+  svg.addEventListener("mousemove", ev=>{
+    const r=svg.getBoundingClientRect();
+    const px=(ev.clientX-r.left)*(W/r.width);
+    let h=Math.floor((px-P.l)/bw); h=Math.max(0,Math.min(23,h));
+    const o=per[h]||per[String(h)]||{};
+    let s=0; cats.forEach(([k])=>s+=Number(o[k]||0));
+    tip.style.opacity=1;
+    tip.innerHTML=`<b>ساعت ${fN(h)}</b><br>مجموع رویداد: ${fN(s)}`;
+    tip.style.left=Math.min(Math.max(h*bw/W*100,4),70)+"%"; tip.style.top="6px";
+  });
+  svg.addEventListener("mouseleave",()=>tip.style.opacity=0);
+  const legend = cats.map(([k,c,fa])=>`<span><i style="background:${c}"></i>${fa}</span>`).join("");
+  $("#secLegend").innerHTML = legend;
+}
+
+/* ---------- rendering ---------- */
+function emptyHtml(title, sub){ return `<div class="empty"><div class="e-ic">✦</div><b>${esc(title)}</b><small>${esc(sub||"")}</small></div>`; }
+function skelRows(n){ let s=""; for(let i=0;i<n;i++) s+=`<div class="lrow"><div class="skel" style="width:26px;height:20px"></div><div class="skel" style="flex:1;height:12px"></div><div class="skel" style="width:60px;height:12px"></div></div>`; return s; }
+
+function renderKpis(d){
+  const s=d.series30||[]; const today=s[s.length-1]||{req:0,bytes:0}; const yest=s[s.length-2]||{req:0,bytes:0};
+  const events=d.events||[];
+  const evByType={}; events.forEach(e=>evByType[e.type]=(evByType[e.type]||0)+1);
+  const topType=Object.entries(evByType).sort((a,b)=>b[1]-a[1])[0];
+  const last7=s.slice(-7); const peak=last7.reduce((a,b)=>b.req>a.req?b:a, last7[0]||{req:0,d:new Date()});
+  const devCount=(d.ips||[]).length;
+  const delta=(a,b)=> b? ((a-b)/b*100) : null;
+  const dReq=delta(today.req,yest.req), dBytes=delta(today.bytes,yest.bytes);
+  const spark=(arr,f,color)=>{
+    if(arr.length<2) return "";
+    const max=Math.max(...arr.map(f),1); const n=arr.length;
+    const pts=arr.map((it,i)=>`${(i/(n-1)*100).toFixed(1)},${(34-30*(f(it)/max)).toFixed(1)}`).join(" ");
+    return `<svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.6"/></svg>`;
+  };
+  const cards=[
+    {ic:"📦",bg:"rgba(56,189,248,.14)",t:"ترافیک امروز",v:gbStr(today.bytes),
+      sub: dBytes===null?"":`دیروز: ${gbStr(yest.bytes)} <span class="${dBytes>=0?"up":"dn"}">${dBytes>=0?"▲":"▼"} ${fN1(Math.abs(dBytes))}٪</span>`,
+      sp:spark(s.slice(-14),x=>x.bytes,"#38bdf8")},
+    {ic:"🗓️",bg:"rgba(139,92,246,.14)",t:"ترافیک ۳۰ روز",v:gbStr(s.reduce((a,b)=>a+b.bytes,0)),
+      sub:`میانگین روزانه: ${gbStr(s.reduce((a,b)=>a+b.bytes,0)/Math.max(1,s.length))}`,
+      sp:spark(s,x=>x.bytes,"#8b5cf6")},
+    {ic:"🚦",bg:"rgba(52,211,153,.13)",t:"درخواست امروز",v:fN(today.req),
+      sub: dReq===null?"":`دیروز: ${fN(yest.req)} <span class="${dReq>=0?"up":"dn"}">${dReq>=0?"▲":"▼"} ${fN1(Math.abs(dReq))}٪</span>`,
+      sp:spark(s.slice(-14),x=>x.req,"#34d399")},
+    {ic:"📱",bg:"rgba(96,165,250,.13)",t:"دستگاه‌های امروز",v:fN(devCount)+"+",
+      sub:"روی ۶۰ آی‌پی برتر (نمونه‌گیری API)", sp:spark(s.slice(-14),x=>x.req,"#60a5fa")},
+    {ic:"🛡️",bg:"rgba(251,191,36,.12)",t:"حملات ۲۴ ساعت",v:fN(events.length),
+      sub: topType? `برتر: ${TYPE_FA[topType[0]]||topType[0]} (${fN(topType[1])})` : "رویدادی ثبت نشده", sp:""},
+    {ic:"📈",bg:"rgba(192,132,252,.13)",t:"پیک ۷ روز",v:fN(peak.req),
+      sub: peak.d? `روزی: ${faWeekday(peak.d)}` : "", sp:spark(last7,x=>x.req,"#c084fc")},
+  ];
+  $("#kpiGrid").innerHTML = cards.map(c=>`
+    <div class="kpi">
+      <div class="k-top"><span class="k-ic" style="background:${c.bg}">${c.ic}</span>${c.t}</div>
+      <div class="k-val">${c.v}</div>
+      <div class="k-sub">${c.sub}</div>${c.sp}
+    </div>`).join("");
+}
+
+function renderMainChart(d){
+  const m=S.chartMode;
+  const s30=d.series30||[];
+  areaChart($("#mainChart"), s30, {
+    value: it => m==="gb" ? it.bytes : it.req,
+    unit:  m==="gb" ? "gb" : "n",
+    name:  m==="gb" ? "حجم" : "درخواست"
+  });
+  const tot = m==="gb" ? gbStr(s30.reduce((a,b)=>a+b.bytes,0)) : fN(s30.reduce((a,b)=>a+b.req,0))+" درخواست";
+  $("#chartTotal").textContent = s30.length ? "مجموع ۳۰ روز: "+tot : "";
+}
+
+function renderSecChart(d){
+  const hours = d.overview && d.overview.hours ? d.overview.hours : null;
+  barsChart($("#secChart"), hours, null);
+  let tot=0;
+  if(hours){ for(const k in hours){ const o=hours[k]; for(const v in o) tot+=Number(o[v]||0); } }
+  else tot = (d.events||[]).length;
+  $("#sec24Total").textContent = fN(tot)+" رویداد";
+}
+
+function renderCountries(d){
+  const el=$("#countryList"); const list=d.countries||[];
+  if(!list.length){ el.innerHTML=emptyHtml("هنوز داده‌ای نیست","امروز درخواستی ثبت نشده"); return; }
+  const max=Math.max(...list.map(c=>c.count),1);
+  el.innerHTML=list.slice(0,9).map(c=>`
+    <div class="lrow">
+      <span class="flag">${flag(c.code)}</span>
+      <span class="nm">${esc(ctry(c.code))}</span>
+      <span class="bar"><i style="width:${(c.count/max*100).toFixed(1)}%"></i></span>
+      <span class="vv">${fN(c.count)} · ${gbStr(c.bytes)}</span>
+    </div>`).join("");
+}
+
+function renderIps(d){
+  const el=$("#ipList"); const list=d.ips||[];
+  if(!list.length){ el.innerHTML=emptyHtml("آی‌پی‌ای ثبت نشده","—"); return; }
+  const max=Math.max(...list.map(i=>i.count),1);
+  const blocked = S._blockedIps||new Set();
+  el.innerHTML=list.slice(0,9).map(it=>{
+    const ip=it.ip||it.address||"";
+    const done=blocked.has(ip);
+    return `<div class="lrow">
+      <span class="ip" style="min-width:112px">${esc(ip)}</span>
+      <span class="bar"><i style="width:${(it.count/max*100).toFixed(1)}%;background:linear-gradient(90deg,#60a5fa,#818cf8)"></i></span>
+      <span class="vv">${fN(it.count)} req</span>
+      <button class="mini-btn ${done?"done":""}" data-block="${esc(ip)}" ${done?"disabled":""}>${done?"مسدود ✓":"مسدود"}</button>
+    </div>`;}).join("");
+}
+
+function renderFeed(d){
+  const el=$("#feedList"); const evs=(d.events||[]).slice(0,8);
+  if(!evs.length){ el.innerHTML=emptyHtml("رویدادی نیست","در ۲۴ ساعت اخیر رویداد امنیتی ثبت نشده — عالی است ✓"); return; }
+  el.innerHTML=evs.map(e=>{
+    const col=TYPE_COLOR[e.type]||"gy";
+    return `<div class="feed-item">
+      <span class="f-ic bdg ${col}" style="width:34px;justify-content:center">${e.type==="waf"?"W":e.type==="firewall"?"F":e.type==="rate_limit"?"R":"D"}</span>
+      <span class="f-tx"><b>${esc(actFa(e.action))}</b> · ${esc(TYPE_FA[e.type]||e.type)}
+        <span class="muted">${esc(e.ip||"")}${e.country_code?" · "+flag(e.country_code):""}</span>
+        <span style="color:var(--txt3);font-size:11.5px">${relTime(e.time)}</span>
+      </span>
+    </div>`;}).join("");
+}
+
+function renderSecChips(d){
+  const evs=d.events||[];
+  const by={}; evs.forEach(e=>by[e.type]=(by[e.type]||0)+1);
+  const chips=[
+    {ic:"🚨",bg:"rgba(251,113,133,.14)",t:"مجموع ۲۴ ساعت",v:fN(evs.length)},
+    {ic:"🧱",bg:"rgba(56,189,248,.14)",t:"WAF",v:fN(by.waf||0)},
+    {ic:"🔥",bg:"rgba(139,92,246,.14)",t:"فایروال",v:fN(by.firewall||0)},
+    {ic:"⏱️",bg:"rgba(251,191,36,.12)",t:"Rate-Limit",v:fN(by.rate_limit||0)},
+    {ic:"🌊",bg:"rgba(244,63,94,.12)",t:"DDoS",v:fN((by.bps||0)+(by.req||0))},
+  ];
+  $("#secChips").innerHTML=chips.map(c=>`
+    <div class="chip"><span class="c-ic" style="background:${c.bg}">${c.ic}</span><span><b>${c.v}</b><small>${c.t}</small></span></div>`).join("");
+}
+
+function renderEventsTable(d){
+  const el=$("#secTbody");
+  const ft=$("#fType").value, fa=$("#fAction").value, fs=$("#fSearch").value.trim().toLowerCase();
+  let evs=(d.events||[]).slice();
+  if(ft) evs=evs.filter(e=>e.type===ft);
+  if(fa==="blocked") evs=evs.filter(e=>(e.action||"").includes("block"));
+  else if(fa==="challenge") evs=evs.filter(e=>(e.action||"").includes("challenge"));
+  else if(fa==="allow") evs=evs.filter(e=>["allow","bypass","log"].includes(e.action));
+  if(fs) evs=evs.filter(e=>(e.ip||"").includes(fs));
+  evs=evs.slice(0, S.eventPage*40);
+  if(!evs.length){ $("#secTbody").innerHTML=`<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--txt3)">رویدادی با این فیلترها پیدا نشد</td></tr>`; $("#btnMoreEvents").style.display="none"; return; }
+  const blocked=S._blockedIps||new Set();
+  el.innerHTML=evs.map(e=>{
+    const col=TYPE_COLOR[e.type]||"gy";
+    const aCol = (e.action||"").includes("block") ? "ro" : (e.action||"").includes("challenge") ? "am" : "gr";
+    const done=blocked.has(e.ip);
+    return `<tr>
+      <td style="white-space:nowrap;color:var(--txt2)">${faTime(e.time)}</td>
+      <td><span class="bdg ${col}">${esc(TYPE_FA[e.type]||e.type||"—")}</span></td>
+      <td><span class="bdg ${aCol}">${esc(actFa(e.action))}</span></td>
+      <td><span class="ip">${esc(e.ip||"—")}</span></td>
+      <td>${e.country_code? flag(e.country_code)+" "+esc(ctry(e.country_code)):"—"}</td>
+      <td><span class="uri" title="${esc(e.hostname||"")}">${esc(e.hostname||"—")}</span></td>
+      <td>${done? `<span class="bdg gr">مسدود ✓</span>` : `<button class="mini-btn" data-block="${esc(e.ip||"")}">مسدودسازی</button>`}</td>
+    </tr>`;}).join("");
+  const allCount=(d.events||[]).filter(e=>{
+    if(ft&&e.type!==ft) return false;
+    if(fa==="blocked"&&!(e.action||"").includes("block")) return false;
+    if(fa==="challenge"&&!(e.action||"").includes("challenge")) return false;
+    if(fa==="allow"&&!["allow","bypass","log"].includes(e.action)) return false;
+    if(fs&&!(e.ip||"").includes(fs)) return false;
+    return true;
+  }).length;
+  $("#btnMoreEvents").style.display = evs.length<allCount ? "" : "none";
+}
+
+async function loadLocks(){
+  const el=$("#locksList");
+  if(S.demo){ el.innerHTML=emptyHtml("حالت نمایشی","مسدودسازی واقعی در حالت نمایشی فعال نیست"); return; }
+  try{
+    const r=await cf(`/zones/${S.zoneId}/firewall/locks/ips?per_page=100`);
+    const list=(r&&r.results)||[];
+    $("#locksCount").textContent = list.length? fN(list.length)+" قفل" : "";
+    if(!list.length){ el.innerHTML=emptyHtml("قفعلی وجود ندارد","هنوز آی‌پی‌ای مسدود نکرده‌ای"); return; }
+    el.innerHTML=list.map(l=>`
+      <div class="lrow">
+        <span class="ip" style="min-width:120px">${esc(l.ip||l)}</span>
+        <span class="bdg ro" style="margin-inline-start:auto">مسدود</span>
+        <button class="mini-btn" data-unblock="${esc(l.ip||l)}">رفع مسدودی</button>
+      </div>`).join("");
+  }catch(e){ el.innerHTML=emptyHtml("دسترسی به قفل‌ها", "به‌احتمال قوی توکن، دسترسی ویرایش فایروال ندارد"); }
+}
+
+async function loadIat(){
+  const st=$("#iatStatus");
+  if(S.demo){ st.textContent="حالت نمایشی — تغییرات اعمال نمی‌شود"; $("#iatMode").checked=false; $("#iatMode").disabled=true; return; }
+  try{
+    const r=await cf(`/zones/${S.zoneId}/security/settings/under-attack-mode`);
+    const on = r && r.mode==="on";
+    $("#iatMode").checked=on; $("#iatMode").disabled=false;
+    st.innerHTML = on ? `<span class="bdg ro">فعال است</span> همه بازدیدکنندگان با چالش روبرو می‌شوند` : `<span class="bdg gr">غیرفعال</span> ترافیک عادی — فقط در اوج حمله روشن کن`;
+  }catch(e){ st.textContent="خواندن وضعیت ممکن نشد (دسترسی کافی؟)"; }
+}
+
+function renderZoneInfo(d){
+  const z=d.zone||S.zones.find(x=>x.id===S.zoneId)||{};
+  const rows=[
+    ["دامنه", `<span class="v fa" style="text-align:right;direction:ltr;display:block">${esc(z.name||"—")}</span>`],
+    ["ID زون", z.id],
+    ["وضعیت", z.status],
+    ["نسخه (Plan)", z.plan && (z.plan.name||z.plan.subtype)],
+    ["تاریخ ساخت", z.createdOn ? new Date(z.createdOn).toLocaleDateString("fa-IR") : "—"],
+    ["NS", (z.nameServers||[]).map(n=>n.dnsname||n.host).join("  ")],
+  ];
+  $("#zoneInfo").innerHTML=rows.map(([k,v])=>`<div class="kv"><span class="k">${k}</span><span class="v ${k==="دامنه"?"fa":""}">${v&&typeof v==="string"&&v.includes("<")?v:esc(v)}</span></div>`).join("");
+  const links=[
+    ["📊","تحلیل‌های ترافیک",`/?to=/:account/zones/${S.zoneId}/analytics`],
+    ["🛡️","مرور امنیت و رویدادها",`/?to=/:account/zones/${S.zoneId}/security`],
+    ["🧱","فایروال و دسترسی آی‌پی",`/?to=/:account/zones/${S.zoneId}/firewall`],
+    ["🌐","DNS و ریکورد‌ها",`/?to=/:account/zones/${S.zoneId}/dns/records`],
+    ["🔑","API Tokens (مدیریت کلید)",`/profile/api-tokens`],
+  ];
+  $("#quickLinks").innerHTML=links.map(([ic,t,u])=>`<a class="qlink" target="_blank" rel="noopener" href="https://dash.cloudflare.com${u}"><span>${ic} ${t}</span><small>↗</small></a>`).join("");
+  const net=[
+    ["CDN جهانی", `<span class="bdg gr">فعال</span>`],
+    ["DDoS Mitigation", `<span class="bdg gr">نامحدود</span>`],
+    ["Web Application Firewall", `<span class="bdg cy">فعال</span>`],
+    ["Rate Limiting", `<span class="bdg cy">فعال</span>`],
+    ["حالت زیر آتش", S._iat? `<span class="bdg ro">روشن</span>` : `<span class="bdg gr">خاموش</span>`],
+  ];
+  $("#zoneNet").innerHTML=net.map(([k,v])=>`<div class="kv"><span class="k">${k}</span>${v}</div>`).join("");
+}
+
+function renderAll(){
+  const d=S.data;
+  renderKpis(d); renderMainChart(d); renderSecChart(d);
+  renderCountries(d); renderIps(d); renderFeed(d);
+  renderSecChips(d); renderEventsTable(d);
+  renderZoneInfo(d);
+  if(S.tab==="sec"){} // table refreshed
+}
+
+/* ---------- data loading ---------- */
+let loading=false;
+async function loadAll(force){
+  if(loading) return; loading=true;
+  setRefreshing(true);
+  if(S.demo){
+    S.data = Object.assign({zone:{name:"demo.sepahar.cloud",status:"active",plan:{name:"Free"},createdOn:new Date().toISOString(),nameServers:[{dnsname:"sepahar.ns.cloudflare.com"}]}}, demoData());
+    S.data.zone.id="demo";
+    S.zones=[{id:"demo",name:"demo.sepahar.cloud"}];
+  } else {
+    const z=S.zoneId;
+    const now=new Date();
+    const d0=new Date(now); d0.setDate(d0.getDate()-1);
+    const d29=new Date(now); d29.setDate(d29.getDate()-29);
+    const jobs = {
+      series30: cf(`/zones/${z}/analytics/zone?metric=requests&since=${isoDay(d29)}&until=${isoDay(now)}`)
+        .then(r=>{
+          const days=(r&&r.days)||[];
+          const arr=[];
+          for(let i=0;i<30;i++){
+            const dd=new Date(now); dd.setDate(dd.getDate()-(29-i));
+            const e=days[i]||days[String(i)]||{};
+            arr.push({d:dd, req:Number(e.count||0), bytes:Number(e.responseBytes||0)});
+          }
+          return arr;
+        }),
+      countries: cf(`/zones/${z}/analytics/zone?metric=requests&since=${isoDay(now)}&until=${isoDay(now)}&dimension=country&per_page=12`)
+        .then(r=>{
+          const c=(r&&(r.country||r.countries))||{};
+          return Object.entries(c).map(([code,v])=>({code, count:v&&v.count?Number(v.count):Number(v)||0, bytes:v&&v.responseBytes?Number(v.responseBytes):0})).sort((a,b)=>b.count-a.count);
+        }).catch(()=>[]),
+      ips: cf(`/zones/${z}/analytics/zone?metric=requests&since=${isoDay(now)}&until=${isoDay(now)}&dimension=ip&per_page=60`)
+        .then(r=>{
+          const c=(r&&(r.ip||r.ips))||{};
+          return Object.entries(c).map(([ip,v])=>({ip, count:v&&v.count?Number(v.count):Number(v)||0})).sort((a,b)=>b.count-a.count);
+        }).catch(()=>[]),
+      overview: cf(`/zones/${z}/security/overview?since=${isoDay(d0)}&until=${isoDay(now)}`).catch(()=>null),
+      events: Promise.allSettled([
+        cf(`/zones/${z}/security/events?resultType=firewall&since=${isoDay(d0)}&until=${isoDay(now)}&per_page=40`),
+        cf(`/zones/${z}/security/events?resultType=waf&since=${isoDay(d0)}&until=${isoDay(now)}&per_page=40`),
+      ]).then(rs=>{
+        const all=[];
+        rs.forEach(r=>{ if(r.status==="fulfilled"){ const list=(r.value&&r.value.results)||[]; list.forEach(e=>all.push(normalizeEvent(e))); } });
+        all.sort((a,b)=>(b.time||"").localeCompare(a.time||""));
+        return all;
+      }).catch(()=>[]),
+      zone: cf(`/zones/${z}`).catch(()=>null),
+    };
+    const res = await Promise.allSettled(Object.values(jobs));
+    const keys=Object.keys(jobs);
+    const nd={};
+    keys.forEach((k,i)=>{ nd[k]=res[i].status==="fulfilled"?res[i].value:null; });
+    nd.series30 = nd.series30 || [];
+    nd.events = nd.events||[];
+    nd.countries = nd.countries || [];
+    nd.ips = nd.ips || [];
+    S.data=nd;
+    if(!nd.zone){ const f=S.zones.find(x=>x.id===z); if(f) nd.zone=f; }
+    if(!nd.series30.length && !nd.events.length && !nd.zone){
+      loading=false; setRefreshing(false);
+      showBanner("err","داده‌ای دریافت نشد — مطمئن شو کلید، دسترسی <b>Zone/Analytics Read</b> دارد. <a href='get-key.html'>راهنمای ساخت کلید صحیح ←</a>");
+      return;
+    }
+  }
+  S._blockedIps = new Set();
+  setRefreshing(false);
+  renderAll();
+  loading=false;
+  setLastUpdate();
+  persist();
+}
+function normalizeEvent(e){
+  return {
+    time: e.time || e.created || e.requestTime,
+    type: (e.type||"").toLowerCase(),
+    action: (e.action||"").toLowerCase(),
+    ip: (e.source&&e.source.ip)||e.ip||e.clientIP||"",
+    country_code: (e.source&&e.source.country_code)||e.countryCode||"",
+    hostname: e.hostname||e.host||"",
+    uri: e.uri||e.url||"",
+    rule: e.rule||e.ruleId||e.reason||"",
+    raw:e
+  };
+}
+
+/* ---------- zones / connect ---------- */
+async function listZones(){
+  let zones=null;
+  try{
+    const r=await cf("/zones?per_page=50");
+    zones=r;
+  }catch(e){}
+  if(!zones && S.accountId){
+    const r=await cf(`/accounts/${S.accountId}/zones?per_page=50`);
+    zones=r;
+  }
+  if(!zones || !zones.length) throw new Error("NO_ZONES");
+  return zones;
+}
+async function connect(token, accountId){
+  S.token=token.trim();
+  if(accountId) S.accountId=accountId.trim();
+  let zones=null;
+  try{ zones=await listZones(); }
+  catch(e){
+    if(e.auth){ showConnMsg("کلید نامعتبر است یا منقضی شده. از get-key.html کلید جدید بساز.", true); return false; }
+    if(e.message==="NO_ZONES"){ $("#acctWrap").hidden=false; showConnMsg("زون‌ای پیدا نشد. اگر اکانت داری، Account ID را هم وارد کن.", false); return false; }
+    showConnMsg("خطا در اتصال: "+e.message, true); return false;
+  }
+  S.zones=zones.map(z=>({id:z.id,name:z.name,status:z.status,plan:z.plan,createdOn:z.createdOn,nameServers:z.nameServers}));
+  if(!S.zoneId || !S.zones.some(z=>z.id===S.zoneId)) S.zoneId=S.zones[0].id;
+  persist();
+  enterApp();
+  return true;
+}
+function showConnMsg(msg,isErr){
+  const el=$("#connMsg"); el.hidden=false;
+  el.innerHTML=(isErr?`<span>⛔ ${esc(msg)}</span>`:`<span>⚠️ ${esc(msg)}</span>`)+
+    (isErr?` &nbsp;<a href="get-key.html">→ ساخت کلید صحیح</a>`:``);
+  el.style.color=isErr?"var(--ro)":"var(--am)";
+}
+function enterApp(){
+  $("#view-onboard").hidden=true;
+  $("#app").hidden=false;
+  fillZoneSel();
+  setModeLabel();
+  loadAll();
+  startLive();
+  if(S.demo) showBanner("demo","👁️ شما در <b>حالت نمایشی</b> هستید — داده‌ها ساختگی‌اند و فقط برای دیدن رابط کاربری. برای داده‌های واقعی خودت، <a href='get-key.html'>کلید بگیر</a> و وارد شو.");
+}
+function exitApp(){
+  stopLive();
+  $("#app").hidden=true;
+  $("#view-onboard").hidden=false;
+  S.demo=false; persist();
+}
+function fillZoneSel(){
+  const sel=$("#zoneSel");
+  sel.innerHTML=S.zones.map(z=>`<option value="${esc(z.id)}" ${z.id===S.zoneId?"selected":""}>${esc(z.name)}</option>`).join("");
+}
+$("#zoneSel").addEventListener("change", e=>{ S.zoneId=e.target.value; S.eventPage=1; persist(); loadAll(); });
+
+/* ---------- live loop ---------- */
+let liveTimer=null, liveLeft=0;
+function startLive(){
+  stopLive();
+  if(!S.live || S.demo) return;
+  liveLeft=S.refreshSec;
+  const tick=()=>{
+    liveLeft--;
+    if(document.hidden){ $("#liveTxt").textContent="LIVE"; return; }
+    if(liveLeft<=0){ liveLeft=S.refreshSec; loadAll(); }
+    else $("#liveTxt").textContent="LIVE · "+fN(liveLeft);
+  };
+  $("#livePill").classList.remove("paused");
+  liveTimer=setInterval(tick,1000);
+  tick();
+  document.addEventListener("visibilitychange", onVis);
+}
+function stopLive(){ if(liveTimer){clearInterval(liveTimer); liveTimer=null;} document.removeEventListener("visibilitychange", onVis); }
+function onVis(){ if(!document.hidden && liveTimer){ liveLeft=Math.min(liveLeft,5); } }
+function setRefreshing(on){
+  const b=$("#btnRefresh");
+  b.classList.toggle("spin",on);
+  if(on) $("#liveTxt").textContent="در حال به‌روزرسانی…";
+}
+function setLastUpdate(){ S._lastUp=Date.now(); }
+function setModeLabel(){
+  $("#modeLabel").textContent = S.demo ? "نمایشی (داده‌های ساختگی)" : (S.token? "متصل با کلید واقعی" : "—");
+  $("#modeLabel").style.color = S.demo? "var(--bl)" : "var(--gr)";
+}
+
+/* ---------- banners & toasts ---------- */
+function showBanner(kind,msg){
+  const el=$("#bannerArea");
+  el.innerHTML=`<div class="banner ${kind}"><span>${msg}</span><span class="x" onclick="this.parentNode.remove()">✕</span></div>`;
+}
+function toast(msg,kind="info"){
+  const t=document.createElement("div");
+  t.className="toast "+kind; t.innerHTML=msg;
+  $("#toasts").appendChild(t);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(),320); },3600);
+}
+
+/* ---------- actions ---------- */
+async function blockIp(ip){
+  ip=(ip||"").trim(); if(!ip) return;
+  if(S.demo){ toast("در حالت نمایشی اعمال نمی‌شود","info"); return; }
+  try{
+    await cf(`/zones/${S.zoneId}/firewall/locks/ips`, {method:"POST", body:{ip}});
+    S._blockedIps.add(ip);
+    toast(`آی‌پی <span class="ltr">${esc(ip)}</span> مسدود شد ✓`,"ok");
+    loadLocks(); renderIps(S.data); if(S.tab==="sec") renderEventsTable(S.data);
+  }catch(e){
+    if(e.auth) toast("دسترسی ویرایش فایروال ندارد — کلیدت را با دسترسی firewall_services بساز","err");
+    else toast("مسدودسازی ناموفق: "+esc(e.message),"err");
+  }
+}
+async function unblockIp(ip){
+  ip=(ip||"").trim(); if(!ip) return;
+  if(S.demo){ toast("در حالت نمایشی اعمال نمی‌شود","info"); return; }
+  try{
+    await cf(`/zones/${S.zoneId}/firewall/locks/ips?ip=${encodeURIComponent(ip)}`, {method:"DELETE"});
+    S._blockedIps.delete(ip);
+    toast(`مسدودی <span class="ltr">${esc(ip)}</span> برداشته شد`,"ok");
+    loadLocks(); renderIps(S.data); if(S.tab==="sec") renderEventsTable(S.data);
+  }catch(e){ toast("رفع مسدودی ناموفق: "+esc(e.message),"err"); }
+}
+
+/* ---------- wiring ---------- */
+function initLogo(){
+  const svg=`<svg viewBox="0 0 64 64" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs><circle cx="32" cy="32" r="26" stroke="url(#lg)" stroke-width="3.5" opacity=".85"/><ellipse cx="32" cy="32" rx="26" ry="10" stroke="url(#lg)" stroke-width="1.4" opacity=".4" transform="rotate(-24 32 32)"/><path d="M32 15l4.6 12.4L49 32l-12.4 4.6L32 49l-4.6-12.4L15 32l12.4-4.6z" fill="url(#lg)"/><circle cx="52" cy="14" r="2" fill="#7dd3fc"/><circle cx="12" cy="48" r="1.6" fill="#c4b5fd"/></svg>`;
+  $$("[data-logo]").forEach(el=>el.innerHTML=svg);
+}
+function initTabs(){
+  $("#tabNav").addEventListener("click", e=>{
+    const b=e.target.closest("button[data-tab]"); if(!b) return;
+    S.tab=b.dataset.tab;
+    $$("nav.tabs button").forEach(x=>x.classList.toggle("on",x===b));
+    ["dash","sec","mgmt","set"].forEach(t=>{ $("#tab-"+t).hidden = t!==S.tab; });
+    if(S.tab==="sec"){ loadLocks(); loadIat(); }
+    if(S.tab==="mgmt"){ renderZoneInfo(S.data); }
+    if(S.tab==="set"){ $("#tokenView").textContent = S.token ? S.token.slice(0,6)+"••••••••"+S.token.slice(-4) : "—"; }
+  });
+}
+function initOnboard(){
+  $("#btnConnect").addEventListener("click", async ()=>{
+    const tok=$("#tokenInput").value;
+    if(!tok.trim()){ toast("اول کلید را بچسبان","err"); return; }
+    const acc=$("#accountIdInput").value;
+    const btn=$("#btnConnect"); btn.disabled=true; btn.textContent="در حال اتصال…";
+    const ok=await connect(tok, acc);
+    btn.disabled=false; btn.textContent="ورود به پنل";
+    if(ok) toast("اتصال برقرار شد — خوش آمدی! ✦","ok");
+  });
+  $("#tokenInput").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#btnConnect").click(); });
+  $("#btnDemo").addEventListener("click", ()=>{ S.demo=true; S.token=""; persist(); enterApp(); });
+}
+function initApp(){
+  $("#btnRefresh").addEventListener("click", ()=>loadAll());
+  $("#btnHome").addEventListener("click", ()=>{ $$("nav.tabs button").forEach(b=>{ if(b.dataset.tab==="set") b.click(); }); });
+  $("#btnMoreEvents").addEventListener("click", ()=>{ S.eventPage++; renderEventsTable(S.data); });
+  ["fType","fAction"].forEach(id=>$("#"+id).addEventListener("change", ()=>{ S.eventPage=1; renderEventsTable(S.data); }));
+  let fT; $("#fSearch").addEventListener("input", ()=>{ clearTimeout(fT); fT=setTimeout(()=>{ S.eventPage=1; renderEventsTable(S.data); },350); });
+  document.body.addEventListener("click", e=>{
+    const b=e.target.closest("[data-block]"); if(b) blockIp(b.dataset.block);
+    const u=e.target.closest("[data-unblock]"); if(u) unblockIp(u.dataset.unblock);
+  });
+  $("#iatMode").addEventListener("change", async e=>{
+    if(S.demo) return;
+    const on=e.target.checked;
+    try{
+      await cf(`/zones/${S.zoneId}/security/settings/under-attack-mode`, {method:"POST", body:{mode:on?"on":"off"}});
+      S._iat=on;
+      toast(on? "حالت «زیر آتش» روشن شد ⚔️" : "حالت «زیر آتش» خاموش شد","ok");
+      renderZoneInfo(S.data);
+    }catch(err){ e.target.checked=!on; toast("تغییر حالت ممکن نشد: "+esc(err.message),"err"); }
+  });
+  $$("#chartTabs button").forEach(b=>b.addEventListener("click", ()=>{
+    S.chartMode=b.dataset.m;
+    $$("#chartTabs button").forEach(x=>x.classList.toggle("on",x===b));
+    renderMainChart(S.data);
+  }));
+  $("#setInterval").addEventListener("change", e=>{ S.refreshSec=+e.target.value; persist(); startLive(); });
+  $("#setLive").addEventListener("change", e=>{
+    S.live=e.target.checked; persist();
+    if(S.live) startLive(); else { stopLive(); $("#livePill").classList.add("paused"); $("#liveTxt").textContent="خاموش"; }
+  });
+  $("#setLive").checked=S.live;
+  if(!S.live){ $("#livePill").classList.add("paused"); $("#liveTxt").textContent="خاموش"; }
+  $("#setInterval").value=S.refreshSec;
+  $("#btnTokTest").addEventListener("click", async ()=>{
+    if(S.demo){ toast("در حالت نمایشی کلیدی وجود ندارد","info"); return; }
+    try{ await cf("/zones?per_page=1"); toast("اتصال سالم است ✓","ok"); }
+    catch(e){ toast("خطا: "+esc(e.message),"err"); }
+  });
+  $("#btnTokCopy").addEventListener("click", async ()=>{
+    if(!S.token) return;
+    try{ await navigator.clipboard.writeText(S.token); toast("کلید کپی شد ⧉","ok"); }catch(e){ toast("کپی ممکن نشد","err"); }
+  });
+  $("#btnModeSwap").addEventListener("click", ()=>{
+    if(S.demo){ location.href="index.html"; }
+    else { if(confirm("بروید به حالت نمایشی؟ (داده‌های ساختگی، بدون اتصال)")) { S.demo=true; persist(); enterApp(); } }
+  });
+  $("#btnWipe").addEventListener("click", ()=>{
+    if(!confirm("کلید از این مرورگر حذف شود؟")) return;
+    localStorage.removeItem(LS_KEY);
+    location.reload();
+  });
+}
+
+/* ---------- boot ---------- */
+(function boot(){
+  initLogo(); initTabs(); initOnboard(); initApp();
+  if(S.demo){ enterApp(); }
+  else if(S.token){
+    // try silent reconnect
+    (async ()=>{
+      try{
+        let zones=null;
+        try{ zones=await listZones(); }catch(e){}
+        if(zones && zones.length){
+          S.zones=zones.map(z=>({id:z.id,name:z.name,status:z.status,plan:z.plan,createdOn:z.createdOn,nameServers:z.nameServers}));
+          if(!S.zones.some(z=>z.id===S.zoneId)) S.zoneId=S.zones[0].id;
+          persist(); enterApp();
+        }
+        // else: stay on onboarding with token prefilled
+      }catch(e){ /* stay */ }
+    })();
+  }
+  if(S.token && !S.demo) $("#tokenInput").value=S.token;
+})();
+</script>
+</body>
+</html>
