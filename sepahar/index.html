@@ -798,13 +798,14 @@ function renderKpis(d){
 
 function renderMainChart(d){
   const m=S.chartMode;
-  areaChart($("#mainChart"), d.series30, {
+  const s30=d.series30||[];
+  areaChart($("#mainChart"), s30, {
     value: it => m==="gb" ? it.bytes : it.req,
     unit:  m==="gb" ? "gb" : "n",
     name:  m==="gb" ? "حجم" : "درخواست"
   });
-  const tot = m==="gb" ? gbStr(d.series30.reduce((a,b)=>a+b.bytes,0)) : fN(d.series30.reduce((a,b)=>a+b.req,0))+" درخواست";
-  $("#chartTotal").textContent = "مجموع ۳۰ روز: "+tot;
+  const tot = m==="gb" ? gbStr(s30.reduce((a,b)=>a+b.bytes,0)) : fN(s30.reduce((a,b)=>a+b.req,0))+" درخواست";
+  $("#chartTotal").textContent = s30.length ? "مجموع ۳۰ روز: "+tot : "";
 }
 
 function renderSecChart(d){
@@ -1027,11 +1028,17 @@ async function loadAll(force){
     const keys=Object.keys(jobs);
     const nd={};
     keys.forEach((k,i)=>{ nd[k]=res[i].status==="fulfilled"?res[i].value:null; });
+    nd.series30 = nd.series30 || [];
     nd.events = nd.events||[];
-    if(S._blockedIps){} // keep
+    nd.countries = nd.countries || [];
+    nd.ips = nd.ips || [];
     S.data=nd;
     if(!nd.zone){ const f=S.zones.find(x=>x.id===z); if(f) nd.zone=f; }
-    if(!nd.series30.length && !nd.events.length && !nd.zone) throw new Error("no-data");
+    if(!nd.series30.length && !nd.events.length && !nd.zone){
+      loading=false; setRefreshing(false);
+      showBanner("err","داده‌ای دریافت نشد — مطمئن شو کلید، دسترسی <b>Zone/Analytics Read</b> دارد. <a href='get-key.html'>راهنمای ساخت کلید صحیح ←</a>");
+      return;
+    }
   }
   S._blockedIps = new Set();
   setRefreshing(false);
